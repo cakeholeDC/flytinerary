@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import EventContainer from '../containers/EventContainer.js'
 
-
 class TripDetails extends React.Component {
 
 	getCurrentTrip = () => {

@@ -1,9 +1,12 @@
 export const FETCHED_TRIPS = "FETCHED_TRIPS"
+export const FETCHED_TRAVELERS = "FETCHED_TRAVELERS"
 export const LOG_IN = "LOG_IN"
 
-const DEV_BASE_URL = "http://localhost:3000"
-// const PROD_BASE_URL = "https://flytinerary-api.herokuapp.com"
-const BASE_URL = DEV_BASE_URL
+const PROD_URL = "https://flytinerary-api.herokuapp.com"
+const DEV_URL = "http://localhost:3000"
+
+// let BASE_URL = PROD_URL
+let BASE_URL = DEV_URL
 
 const TRIPS_URL = `${BASE_URL}/trips`
 const TRAVELERS_URL = `${BASE_URL}/travelers`
@@ -20,8 +23,22 @@ export function fetchingTrips(){
 	}
 }
 
-export function fetchedTrips(diets_array){
-	return { type: FETCHED_TRIPS, payload: diets_array }
+export function fetchedTrips(trips_array){
+	return { type: FETCHED_TRIPS, payload: trips_array }
+}
+
+export function fetchingTravelers(){
+	return (dispatch) => {
+		fetch(TRAVELERS_URL)
+	      .then(res => res.json())
+	      .then(travelers_array => {
+	      	dispatch(fetchedTrips(travelers_array))
+	      })
+	}
+}
+
+export function fetchedTravelers(travelers_array){
+	return { type: FETCHED_TRAVELERS, payload: travelers_array }
 }
 
 // export function processLoginForm(user){
