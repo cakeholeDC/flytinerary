@@ -1,10 +1,10 @@
 import React from 'react'
-import { Card, Image, Button } from 'semantic-ui-react'
+import { Card, Button, Icon } from 'semantic-ui-react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 // import Moment from 'react-moment';
 // import 'moment-timezone';
-import * as moment from 'moment'
+// import * as moment from 'moment'
 
 
 class TripCard extends React.Component {
@@ -35,11 +35,16 @@ class TripCard extends React.Component {
 
 
 	render(){
-		let { id, nickname, destination, start_datetime, end_datetime, image, organizer, attendees } = this.props.trip
+		console.log(this.props.trip.nickname, this.props.trip)
+		let { nickname, destination, start_datetime, end_datetime, image, organizer, attendees, event_timeline } = this.props.trip
 		
 		return(
 			<Card onClick={ this.loadTripShowPage }>
-			    <Image src={ image } wrapped ui="false"/>
+			    <img 
+			    	src={ image }
+			    	alt={ nickname } 
+			    	height="198px" 
+			    	style={{objectFit: "cover"}}/>
 				<Card.Content>
 				    <Card.Header>{ nickname }</Card.Header>
 				    <Card.Meta>
@@ -49,10 +54,12 @@ class TripCard extends React.Component {
 				    <Card.Meta>{ `Organizer: ${organizer.name}` }</Card.Meta>
 			    </Card.Content>
 			    <Card.Content extra>
-			    	{ `${attendees.length} people attending`  }
+				    <Icon name='user' />
+			    	{ `${attendees.length} Travelers`  }
 			    </Card.Content>
 			    <Button>
-			    	TEST
+				    <Icon name="calendar alternate" />
+			    	{ `View Flytinerary - ${event_timeline.length} Items` }
 			    </Button>
 			</Card>
 		)

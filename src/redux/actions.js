@@ -2,7 +2,7 @@ export const FETCHED_TRIPS = "FETCHED_TRIPS"
 export const FETCHED_TRAVELERS = "FETCHED_TRAVELERS"
 export const LOG_IN = "LOG_IN"
 
-const PROD_URL = "https://flytinerary-api.herokuapp.com"
+// const PROD_URL = "https://flytinerary-api.herokuapp.com"
 const DEV_URL = "http://localhost:3000"
 
 // let BASE_URL = PROD_URL
@@ -10,8 +10,8 @@ let BASE_URL = DEV_URL
 
 const TRIPS_URL = `${BASE_URL}/trips`
 const TRAVELERS_URL = `${BASE_URL}/travelers`
-const EVENTS_URL = `${BASE_URL}/events`
-const API_LOGIN = `${BASE_URL}/api/v1/login` 
+// const EVENTS_URL = `${BASE_URL}/events`
+// const API_LOGIN = `${BASE_URL}/api/v1/login` 
 
 export function fetchingTrips(){
 	return (dispatch) => {

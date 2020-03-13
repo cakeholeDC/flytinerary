@@ -1,6 +1,6 @@
 import React from 'react'
 import { Menu } from 'semantic-ui-react'
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 
 
@@ -10,7 +10,6 @@ class NavBar extends React.Component {
 			<Menu 
 				id="nav-bar"
 				size="huge"
-				inverted
 			>
 		        <NavLink to='/' exact>
 					<Menu.Item name='home'>Home</Menu.Item>
