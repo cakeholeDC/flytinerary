@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.scss';
 import { connect } from 'react-redux'
-import { fetchingTrips } from './redux/actions'
+import { fetchingTrips, fetchingTravelers } from './redux/actions'
 import NavBar from "./components/NavBar.js"
 import MainContainer from "./containers/MainContainer.js"
 
@@ -9,6 +9,7 @@ import MainContainer from "./containers/MainContainer.js"
 class App extends React.Component {
   componentDidMount(){
     this.props.fetchingTrips()
+    this.props.fetchingTravelers()
   }
 
   render(){
@@ -29,7 +30,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchingTrips: () => { dispatch(fetchingTrips()) } 
+  fetchingTrips: () => { dispatch(fetchingTrips()) },
+  fetchingTravelers: () => { dispatch(fetchingTravelers()) } 
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

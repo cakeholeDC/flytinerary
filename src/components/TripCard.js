@@ -12,10 +12,9 @@ class TripCard extends React.Component {
 
 
 	render(){
-		console.log(this.props)
+		console.log("Trip", this.props.trip.nickname, this.props)
 		
 		let { id, nickname, destination, start_datetime, end_datetime, image, organizer, attendees } = this.props.trip
-
 		return(
 			<Card
 				onClick={ this.loadTripShowPage }
@@ -37,3 +36,4 @@ const mapStateToProps = (state) => {
 }
 
 export default withRouter(connect(mapStateToProps)(TripCard))
+

@@ -4,12 +4,12 @@ import React from 'react'
 class NewTrip extends React.Component {
 	render (){
 		return (
-			<div>
+			<React.Fragment>
 				<form>
-				<input name="search" placeholder="Bali, Indonesia"></input>
-				<button type="submit" name='submit' >GO!</button>
+					<input name="search" placeholder="Bali, Indonesia"></input>
+					<button type="submit" name='submit' >GO!</button>
 				</form>
-			</div>
+			</React.Fragment>
 		)
 	}
 }

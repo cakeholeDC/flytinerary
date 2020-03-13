@@ -32,7 +32,7 @@ export function fetchingTravelers(){
 		fetch(TRAVELERS_URL)
 	      .then(res => res.json())
 	      .then(travelers_array => {
-	      	dispatch(fetchedTrips(travelers_array))
+	      	dispatch(fetchedTravelers(travelers_array))
 	      })
 	}
 }

@@ -6,9 +6,10 @@ import { Card } from 'semantic-ui-react'
 
 class TripsContainer extends React.Component {
 	render(){
+		// console.log("TripsContainer", this.props)
 		return(
 			<Card.Group centered items-per-row={4}>
-				{ this.props.trips.map(trip => <TripCard trip={trip} />) }
+				{ this.props.trips.map((trip, index) => <TripCard key={index} trip={trip} />) }
 			</Card.Group>
 		)
 	}

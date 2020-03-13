@@ -1,7 +1,7 @@
 import React from "react"
 import HomeContainer from './HomeContainer.js'
 import TripsContainer from './TripsContainer.js'
-import TravelersContainer from './TravelersContainer.js'
+// import TravelersContainer from './TravelersContainer.js'
 import TripDetails from '../components/TripDetails.js'
 import About from '../components/About.js'
 import { Route, Switch } from "react-router-dom";
