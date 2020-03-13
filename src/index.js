@@ -7,7 +7,7 @@ import 'semantic-ui-css/semantic.min.css'
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from 'react-redux'
 import store from './redux/store'
-
+import moment from 'moment'
 
 ReactDOM.render(
 	<BrowserRouter>
