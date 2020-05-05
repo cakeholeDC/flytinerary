@@ -1,4 +1,5 @@
 import React from 'react';
+import dotenv from 'dotenv'
 import ReactDOM from 'react-dom';
 import './index.scss';
 import App from './App';
@@ -7,6 +8,8 @@ import 'semantic-ui-css/semantic.min.css'
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from 'react-redux'
 import store from './redux/store'
+
+dotenv.config()
 
 ReactDOM.render(
 	<BrowserRouter>

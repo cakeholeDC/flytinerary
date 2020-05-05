@@ -2,9 +2,16 @@ import React from 'react'
 // import { Menu } from 'semantic-ui-react'
 import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
+import { device } from '../utils/device'
+import NavContainer from '../containers/NavContainer'
 
 const Menu = styled.div`
 	width: 80%;
+
+	@media screen and ${device.tablet} {
+		width: 94%;
+	}
+
 	margin: auto;
 	background-color: green;
 	display: flex;
@@ -16,7 +23,7 @@ const Menu = styled.div`
 	}
 
 	.navbar {
-		flex: 8;
+		flex: 10;
 	}
 
 	.avatar {
@@ -30,7 +37,7 @@ function MenuBar() {
 	return(
 		<Menu>
 			<img className="logo" src="https://via.placeholder.com/140x40.png?text=Flytinerary Logo" />
-			<div className="navbar" />
+			<NavContainer className="navbar" />
 			<img className="avatar" src="https://via.placeholder.com/40x40.png?text=Avatar" />
 		</Menu>
 	)

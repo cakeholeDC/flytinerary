@@ -2,6 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import EventContainer from '../containers/EventContainer.js'
+import Map from './Map'
+
+// mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_API_TOKEN
 
 class TripDetails extends React.Component {
 
@@ -10,7 +13,7 @@ class TripDetails extends React.Component {
 	}
 
 	render(){
-		console.log(this.getCurrentTrip())
+		// console.log(this.getCurrentTrip())
 		return (
 			this.props.trips.length > 0 
 			? <div>
@@ -22,7 +25,7 @@ class TripDetails extends React.Component {
 					{ this.getCurrentTrip().attendees.map(traveler => <li>{ traveler.name }</li>) }
 				</ul>
 				</div>
-				<EventContainer events={ this.getCurrentTrip().event_timeline }/>
+				<Map />
 			</div>
 			: null
 		)

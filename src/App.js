@@ -14,6 +14,7 @@ class App extends React.Component {
   }
 
   render(){
+    console.log("API", process.env.REACT_APP_TEST_API)
     return (
       <div className="App">
         <HeaderContainer />
