@@ -2,8 +2,9 @@ import React from 'react';
 import './App.scss';
 import { connect } from 'react-redux'
 import { fetchingTrips, fetchingTravelers } from './redux/actions'
-import NavBar from "./components/NavBar.js"
-import MainContainer from "./containers/MainContainer.js"
+import HeaderContainer from "./containers/HeaderContainer.js"
+import ContentContainer from "./containers/ContentContainer.js"
+// import { Router } from "react-router-dom";
 
 
 class App extends React.Component {
@@ -15,8 +16,8 @@ class App extends React.Component {
   render(){
     return (
       <div className="App">
-        <NavBar />
-        <MainContainer />
+        <HeaderContainer />
+        <ContentContainer />
       </div>
     );
   } 
