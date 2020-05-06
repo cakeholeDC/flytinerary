@@ -14,13 +14,14 @@ import { connect } from 'react-redux'
 const Content = styled.div`
 	background-color: gray;
 
+	position: absolute;
+	margin-left: 10%;
+	height: calc(100% - 62px); //62px is navbar height
 	width: 80%;
+
 	@media screen and ${device.tablet} {
 		width: 100%;
 	}
-
-	height: calc(100% - 62px); //62px is navbar height
-	margin: auto;
 `
 
 
@@ -28,21 +29,19 @@ class ContentContainer extends React.Component {
 	render(){
 		return(
 			<Content>
-	          <Route exact path="/login" component={ LoginContainer } />
-				{ !this.props.currentUser 
-              		? <Redirect to='/login' />
-          	  		: <Switch>
-				        <Route exact path="/trips/:id" component={ TripDetails }/>
-				        <Route exact path="/trips" component={ TripsContainer } />
-				        <Route exact path="/about" component={ About } />
-			            <Route exact path="/profile" component={ HomeContainer } />
-				        <Route exact path="/" component={ HomeContainer } />
-					</Switch>
-				}
+				<Switch>
+					<Route exact path="/trips/:id" component={ TripDetails }/>
+			        <Route exact path="/trips" component={ TripsContainer } />
+			        <Route exact path="/about" component={ About } />
+		            <Route exact path="/profile" component={ HomeContainer } />
+			        <Route exact path="/" component={ HomeContainer } />
+				</Switch>
 			</Content>
 		)
 	}
 }
+		      		// <Route exact path="/sign-up" component={ LoginContainer } />
+	          		// <Route exact path="/login" component={ LoginContainer } />
 
 const mapStateToProps = (state) => {
   return {

@@ -1,7 +1,8 @@
 import React from 'react'
 import TripsContainer from './TripsContainer.js'
-// import NewTrip from '../components/NewTrip.js'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
+
 
 const HomePage = styled.div`
 	text-align: left;
@@ -13,7 +14,7 @@ class HomeContainer extends React.Component {
 	render (){
 		return (
 			<HomePage>
-				<h1>{"Welcome, ${NAME}"}</h1>
+				<h1>{`Welcome, ${this.props.currentUser.username}`}</h1>
 				<TripsContainer homepage/>
 			</HomePage>
 		)
@@ -27,4 +28,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default HomeContainer
+export default connect(mapStateToProps)(HomeContainer)

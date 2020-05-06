@@ -23,9 +23,6 @@ function NavContainer(props) {
 			<NavLink className="selected" to='/trips' exact>Trips</NavLink>
 			<NavLink className="selected" to='/travelers' exact>Travelers</NavLink>
 			<NavLink className="selected" to='/about' exact>About</NavLink>
-			<NavLink className="selected" to={ props.currentUser ? '/profile' : '/login' } exact>
-				{ props.currentUser ? 'Profile' : 'Log In' }
-			</NavLink>
       	</Nav>
 	)
 }

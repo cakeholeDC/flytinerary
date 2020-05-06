@@ -1,9 +1,9 @@
 import React from 'react'
-// import { Menu } from 'semantic-ui-react'
-import { NavLink } from 'react-router-dom'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { device } from '../utils/device'
 import NavContainer from '../containers/NavContainer'
+import { device } from '../utils/device'
+import { Link } from 'react-router-dom'
 
 const Menu = styled.div`
 	width: 80%;
@@ -16,7 +16,7 @@ const Menu = styled.div`
 	background-color: green;
 	display: flex;
 
-	.logo {
+	#header-logo {
 		flex: 3;
 		max-height: 40px;
 		max-width: 140px;
@@ -30,17 +30,30 @@ const Menu = styled.div`
 		flex: 1;
 		max-width: 40px;
 		max-height: 40px;
+
+		img {
+			border-radius: 50%;
+		}
 	}
 `
 
-function MenuBar() {
+function MenuBar(props) {
 	return(
 		<Menu>
-			<img className="logo" src="https://via.placeholder.com/140x40.png?text=Flytinerary Logo" />
+			<a id="header-logo" href="/"><img className="logo" src="https://via.placeholder.com/140x40.png?text=Flytinerary Logo" /></a>
 			<NavContainer className="navbar" />
-			<img className="avatar" src="https://via.placeholder.com/40x40.png?text=Avatar" />
+			{ props.currentUser /* @@TODO - make this an interactive menu*/
+				? <a className="avatar" href="/profile"><img className="avatar" src="https://via.placeholder.com/400x400.png?text=Avatar" /></a>
+				: <Link to="/login">Sign In</Link>
+			}
 		</Menu>
 	)
 }
 
-export default MenuBar
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.currentUser,
+  }
+}
+
+export default connect(mapStateToProps)(MenuBar)

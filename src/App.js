@@ -4,7 +4,8 @@ import { connect } from 'react-redux'
 import { fetchingTrips, fetchingTravelers, setCurrentUser } from './redux/actions'
 import HeaderContainer from "./containers/HeaderContainer.js"
 import ContentContainer from "./containers/ContentContainer.js"
-import { Redirect, Router } from "react-router-dom";
+import LoginContainer from './containers/LoginContainer.js'
+import { Switch, Route } from "react-router-dom";
 
 
 var testUser = {
@@ -16,11 +17,27 @@ var testUser = {
   gender: "M"
 }
 
+var API_URL = "http://localhost:3000"
+const PROFILE_URL = `${API_URL}/profile`
+
 class App extends React.Component {
   componentDidMount(){
     this.props.getTrips()
-    // this.props.getUsers()
-    // this.props.setUser(testUser)
+
+    let token = localStorage.getItem("token")
+
+    if (token) {
+      fetch(PROFILE_URL, {
+        method: "GET",
+        headers: {
+          "Authentication": token
+        }
+      })
+      .then(res => res.json())
+      .then(user => {
+        this.props.setCurrentUser(user)
+      })
+    }
   }
 
   render(){
@@ -28,7 +45,10 @@ class App extends React.Component {
     return (
       <div className="App">
         <HeaderContainer />
-        <ContentContainer />
+        { this.props.currentUser 
+          ? <ContentContainer />
+          : <LoginContainer />
+        }
       </div>
     );
   } 
@@ -42,9 +62,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  setUser: (user) => { dispatch(setCurrentUser(user)) },
+  setCurrentUser: (user) => { dispatch(setCurrentUser(user)) },
   getTrips: () => { dispatch(fetchingTrips()) },
-  // getUsers: () => { dispatch(fetchingTravelers()) } 
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

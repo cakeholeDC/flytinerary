@@ -27,25 +27,28 @@ export function fetchedTrips(trips_array){
 	return { type: FETCHED_TRIPS, payload: trips_array }
 }
 
-// export function fetchingTravelers(){
-// 	return (dispatch) => {
-// 		fetch(TRAVELERS_URL)
-// 	      .then(res => res.json())
-// 	      .then(travelers_array => {
-// 	      	dispatch(fetchedTravelers(travelers_array))
-// 	      })
-// 	}
-// }
-
-// export function fetchedTravelers(travelers_array){
-// 	return { type: FETCHED_TRAVELERS, payload: travelers_array }
-// }
-
-export function fetchingUser(){
-	// return dispatch() => {
-	// 	fetch(API_LOGIN)
-	// }
-	return true
+export function handleLogIn(user){
+	return (dispatch) => {
+		const userConfig = {
+			method: "POST",
+			headers: {
+				'Content-Type': "application/json",
+				"Accept" : "application/json"
+			},
+			body: JSON.stringify(user)
+		}
+		
+		fetch(API_LOGIN, userConfig)
+			.then(res => res.json())
+			.then(apiResponse => {
+				if (!apiResponse.error) {
+					localStorage.setItem("token", apiResponse.jwt)
+					dispatch(setCurrentUser(JSON.parse(apiResponse.currentUser)))
+				} else {
+					console.log(apiResponse)//@TODO error notice IZI toast
+				}
+			})
+	}
 }
 
 export function setCurrentUser(user){
