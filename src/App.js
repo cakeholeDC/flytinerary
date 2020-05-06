@@ -1,16 +1,26 @@
 import React from 'react';
 import './App.scss';
 import { connect } from 'react-redux'
-import { fetchingTrips, fetchingTravelers } from './redux/actions'
+import { fetchingTrips, fetchingTravelers, setCurrentUser } from './redux/actions'
 import HeaderContainer from "./containers/HeaderContainer.js"
 import ContentContainer from "./containers/ContentContainer.js"
-// import { Router } from "react-router-dom";
+import { Redirect, Router } from "react-router-dom";
 
+
+var testUser = {
+  id: 1,
+  first_name: "Kyle",
+  last_name: "Cole",
+  username: "cakehole",
+  age: 31,
+  gender: "M"
+}
 
 class App extends React.Component {
   componentDidMount(){
-    this.props.fetchingTrips()
-    this.props.fetchingTravelers()
+    this.props.getTrips()
+    // this.props.getUsers()
+    // this.props.setUser(testUser)
   }
 
   render(){
@@ -32,8 +42,9 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchingTrips: () => { dispatch(fetchingTrips()) },
-  fetchingTravelers: () => { dispatch(fetchingTravelers()) } 
+  setUser: (user) => { dispatch(setCurrentUser(user)) },
+  getTrips: () => { dispatch(fetchingTrips()) },
+  // getUsers: () => { dispatch(fetchingTravelers()) } 
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

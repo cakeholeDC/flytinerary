@@ -1,7 +1,8 @@
 import React from 'react'
-// import { Menu } from 'semantic-ui-react'
 import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
+
 
 const Nav = styled.div`
 	width: 70%;
@@ -15,18 +16,25 @@ const Nav = styled.div`
 	}
 `
 
-function NavContainer() {
+function NavContainer(props) {
 	return(
 		<Nav id="nav-container">
 	        <NavLink className="selected" to='/' exact>Home</NavLink>
 			<NavLink className="selected" to='/trips' exact>Trips</NavLink>
 			<NavLink className="selected" to='/travelers' exact>Travelers</NavLink>
 			<NavLink className="selected" to='/about' exact>About</NavLink>
-			<NavLink className="selected" to='/profile' exact>
-				Login / Profile
+			<NavLink className="selected" to={ props.currentUser ? '/profile' : '/login' } exact>
+				{ props.currentUser ? 'Profile' : 'Log In' }
 			</NavLink>
       	</Nav>
 	)
 }
 
-export default NavContainer
+
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.currentUser,
+  }
+}
+
+export default connect(mapStateToProps)(NavContainer)
