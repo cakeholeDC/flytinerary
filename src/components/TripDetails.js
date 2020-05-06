@@ -9,10 +9,12 @@ import Map from './Map'
 class TripDetails extends React.Component {
 
 	getCurrentTrip = () => {
-		return this.props.trips.filter(trip => trip.id === parseInt(this.props.match.params.id), 10)[0]
+		const trip = this.props.trips.filter(trip => trip.id === parseInt(this.props.match.params.id), 10)[0]
+		return trip
 	}
 
 	render(){
+		const destination = this.getCurrentTrip() ? this.getCurrentTrip().destination : null
 		// console.log(this.getCurrentTrip())
 		return (
 			this.props.trips.length > 0 
@@ -25,7 +27,7 @@ class TripDetails extends React.Component {
 					{ this.getCurrentTrip().attendees.map(traveler => <li>{ traveler.name }</li>) }
 				</ul>
 				</div>
-				<Map />
+				<Map location={destination}/>
 			</div>
 			: null
 		)
