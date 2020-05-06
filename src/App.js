@@ -14,7 +14,7 @@ class App extends React.Component {
   }
 
   render(){
-    console.log("API", process.env.REACT_APP_TEST_API)
+    // console.log("API", process.env.REACT_APP_MAPBOX_TOKEN)
     return (
       <div className="App">
         <HeaderContainer />

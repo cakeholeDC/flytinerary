@@ -21,11 +21,13 @@ export default class Map extends React.Component{
 	    	<div>
 		      <ReactMapGL
 		        {...viewport}
-		      	// mapboxApiAccessToken="pk.eyJ1IjoiY2FrZWhvbGUiLCJhIjoiY2s5dWE0MXdpMWxsNjNscDVpeDE4MGpkbiJ9.fDrpr5UV2DsAc75AQMlQBw"
 		      	mapboxApiAccessToken={ process.env.REACT_APP_MAPBOX_TOKEN }
-		        // onViewportChange={(viewport) => this.setState({viewport})}
+		        onViewportChange={(viewport) => this.setState({viewport})}
+		        // mapStyle="mapbox://styles/cakehole/ck9vdfrq40zp11ilisa9eqvvg"
+		        mapStyle="mapbox://styles/cakehole/ck9vdwijy0h6u1iomel35a3hk"
 		      >
 		      	Markers Here
+		      {/* import Marker from react-map => import data => map(data => <Marker latitude={} longitude={} key="">[CONTENT FOR ICON, BUTTON, IMG, ETC]</Marker> */}
 		      </ReactMapGL>
 	      </div>
 	    );
