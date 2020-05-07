@@ -33,6 +33,7 @@ const Menu = styled.div`
 
 		img {
 			border-radius: 50%;
+			padding: 5px;
 		}
 	}
 `

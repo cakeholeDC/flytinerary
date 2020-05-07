@@ -22,15 +22,24 @@ const Card = styled.div`
 		object-fit: cover;
 	}
 
+	.blocker {
+	    background-color: rgba(0,0,0,.4);
+	    width: inherit;
+	    height: 7%;
+	    margin-top: 7.5%;
+	    position: absolute;
+	    z-index: 1;
+	}
+
 	.trip-content {
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-end;
-		// text-align: center;
 		position: absolute;
 		width: inherit;
 	    height: inherit;
 	    padding: .5rem;
+	    z-index: 999999;
 
 	    p {
 	    	color: #fff;
@@ -45,7 +54,7 @@ const Card = styled.div`
 	    	font-size: .8em;
 	    }
 
-	    .details {
+	    .trip-metrics {
 	    	display:flex;
 
 	    }
@@ -90,19 +99,20 @@ class TripCard extends React.Component {
 		let { nickname, destination, image, start_datetime, end_datetime, organizer, attendees, event_timeline } = this.props.trip
 
 		let dates = this.displayTripCardDateRange(start_datetime, end_datetime)
-		let travelers = `${attendees.length} Attendee${attendees.length > 1 ? "s" : '' }`
-		let events = `${event_timeline.length} Event${event_timeline.length > 1 ? "s" : '' }`
+		let travelers = `${attendees.length} Attendee${attendees.length > 1 || attendees.length === 0 ? "s" : '' }`
+		let events = `${event_timeline.length} Event${event_timeline.length > 1 || event_timeline.length === 0 ? "s" : '' }`
 		
 		return(
 			<Card className="trip-card" onClick={ this.loadTripShowPage }>
 				<div className="trip-content">
 					<p className="trip-name">{nickname}</p>
 					<p className="trip-dates">{dates}</p>
-					<div className='details'>
+					<div className='trip-metrics'>
 						<p className="trip-travelers">{travelers}</p>
 						<p className="trip-events">{events}</p>
 					</div>
 				</div>
+				<div className="blocker" />
 				<img src={image} />
 			</Card>
 		)
