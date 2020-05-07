@@ -4,69 +4,100 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 // import Moment from 'react-moment';
 // import 'moment-timezone';
-// import * as moment from 'moment'
+import * as moment from 'moment'
 import styled from 'styled-components'
 
 const Card = styled.div`
-	// display: flex; 
-	// flex-direction: column;
-	// flex-basis: calc(25% - 40px); // numColumns = 100/[percentage] / MINUS / space around = integer  
-	// justify-content: center;
-	// position: relative;
-	// border: 1px solid black
-
-	background: black; //shows through image when transparent
-
-	// max-width: calc(25% - 40px)
-
-	// background: black; //shows through image when transparent
-`
-
-const TripImage = styled.img`
-	align-content: center;
-	width: 18.75rem;
+	width: 12rem;
     height: 18.75rem;
-	min-width: 100%;
-	object-fit: cover;
+	background: white; //shows through image when transparent
+	margin: 1rem .5rem;
+
+
+	img {
+		width: 100%;
+	    height: 100%;
+		object-fit: cover;
+	}
+
+	.trip-content {
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+		// text-align: center;
+		position: absolute;
+		width: inherit;
+	    height: inherit;
+	    padding: .5rem;
+
+	    p {
+	    	color: #fff;
+	    	margin-bottom: 0px;
+	    }
+
+	    .trip-name {
+	    	font-weight: bold;
+	    }
+
+	    .trip-dates{
+	    	font-size: .8em;
+	    }
+
+	    .details {
+	    	display:flex;
+
+	    }
+
+	    .trip-travelers,
+    	.trip-events {
+    		flex: 1;
+	    	font-size: .75em;
+	    	font-style: italic;
+	    }
+	}
 `
 
 class TripCard extends React.Component {
 
-	// loadTripShowPage = () => {
-	// 	this.props.history.push(`/trips/${this.props.trip.id}`)
-	// }
+	displayTripCardDateRange = (tripStart, tripEnd) => {
+		const start = moment(tripStart)
+		const end = moment(tripEnd)
 
-	// displayTripCardDateRange = (tripStart, tripEnd) => {
-	// 	const moment = require('moment');
+		// does the event occurr within a single year?
+		if (start.format('YYYY') === end.format('YYYY')) {
+			// does the event occurr within the a single month?
+			if (start.format("MM") === end.format("MM")) {
+				return `${start.format("MMM D")} – ${end.format("D, YYYY")}`
+			} else {
+				return `${start.format("MMM D")} – ${end.format("MMM D, YYYY")}`
+			}
+		} else {
+			// the event does not occur within a single year, and therefore cannot occurr within a single month
+			return `${start.format("MMM D, YYYY")} – ${end.format("MMM D, YYYY")}`
+		}
+	}
 
-	// 	const start = moment(tripStart)
-	// 	const end = moment(tripEnd)
-
-	// 	// does the event occurr within a single year?
-	// 	if (start.format('YYYY') === end.format('YYYY')) {
-	// 		// does the event occurr within the a single month?
-	// 		if (start.format("MM") === end.format("MM")) {
-	// 			return `${start.format("MMM D")} – ${end.format("D, YYYY")}`
-	// 		} else {
-	// 			return `${start.format("MMM D")} – ${end.format("MMM D, YYYY")}`
-	// 		}
-	// 	} else {
-	// 		// the event does not occur within a single year, and therefore cannot occurr within a single month
-	// 		return `${start.format("MMM D, YYYY")} – ${end.format("MMM D, YYYY")}`
-	// 	}
-	// }
-
+	loadTripShowPage = () => {
+		this.props.history.push(`/trips/${this.props.trip.id}`)
+	}
 
 	render(){
-		// console.log(this.props.trip.nickname, this.props.trip)
-		let { nickname, destination, start_datetime, end_datetime, image, organizer, attendees, event_timeline } = this.props.trip
+		let { nickname, destination, image, start_datetime, end_datetime, organizer, attendees, event_timeline } = this.props.trip
+
+		let dates = this.displayTripCardDateRange(start_datetime, end_datetime)
+		let travelers = `${attendees.length} Attendee${attendees.length > 1 ? "s" : '' }`
 		
 		return(
-			<Card className="trip-card">
-				<TripImage src={image} />
-				<p>{nickname}</p>
-				<p>{start_datetime}</p>
-				<p>{nickname}</p>
+			<Card className="trip-card" onClick={ this.loadTripShowPage }>
+				<div className="trip-content">
+					<p className="trip-name">{nickname}</p>
+					<p className="trip-dates">{dates}</p>
+					<div className='details'>
+						<p className="trip-travelers">{travelers}</p>
+						<p className="trip-events">{event_timeline.length}</p>
+					</div>
+				</div>
+				<img src={image} />
 			</Card>
 		)
 	}

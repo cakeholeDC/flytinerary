@@ -1,7 +1,6 @@
 import React from "react"
 import { connect } from 'react-redux'
 import TripCard from "../components/TripCard.js"
-// import { Card } from 'semantic-ui-react'
 import styled from 'styled-components'
 
 
@@ -12,15 +11,11 @@ const Trips = styled.div`
   	flex-wrap: wrap;
   	flex-direction: row;
   	justify-content: center;
+  	border: 1px solid black;
 
   	h2 {
   		width: 100%;
   	}
-
-  	.trip {
-  		text-align: center;
-  		flex: 1;
-  	} 
 `
 
 class TripsContainer extends React.Component {
@@ -28,9 +23,8 @@ class TripsContainer extends React.Component {
 		const trips = this.props.trips
 		return(
 			<Trips className="trips-container">
-				<h2>Your Trips</h2>
-					{/* trips.map((trip, index) => <TripCard key={index} trip={trip} />) */}
-				{ trips.map((trip, index) => <div className="trip" key={index}><a href={`/trips/${trip.id}`}>{trip.nickname}</a></div>) }
+				<h2>Your Upcoming Trips</h2>
+					{ trips.map((trip, index) => <TripCard key={index} trip={trip} />) }
 			</Trips>
 		)
 	}
