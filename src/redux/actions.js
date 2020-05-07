@@ -13,7 +13,7 @@ const TRAVELERS_URL = `${BASE_URL}/travelers`
 // const EVENTS_URL = `${BASE_URL}/events`
 const API_LOGIN = `${BASE_URL}/api/v1/login` 
 
-export function fetchingTrips(){
+export function fetchingTrips(user){
 	return (dispatch) => {
 		fetch(TRIPS_URL)
 	      .then(res => res.json())
