@@ -18,15 +18,14 @@ export default class Mapbox extends React.Component{
 	      height: 'calc(100vh - 62px)',
 	      latitude: 38.9240973,
 	      longitude: -77.0274758,
-	      zoom: 12.5,
+	      zoom: 13.5,
 	    // }
 	}
 
-	async componentDidMount(){
-		const mapOrigin = await this.mapboxGeolocate(this.props.location)
+	componentDidMount(){
 		this.setState({
-		      latitude: mapOrigin.latitude,
-		      longitude: mapOrigin.longitude,
+		      latitude: this.props.trip.latitude,
+		      longitude: this.props.trip.longitude,
 		})
 	}
 
@@ -47,7 +46,12 @@ export default class Mapbox extends React.Component{
 
     render() {
     	const { viewport } = { viewport: {...this.state} }
-    	const destination = {...this.state } // generate a central marker for the PRIMARY destination
+    	// generate a central marker for the PRIMARY trip destination
+    	const destination = { 
+    		latitude: this.props.trip.latitude,
+    		longitude: this.props.trip.longitude,
+    		name: this.props.trip.destination
+    	} 
 	    return (
 	    	<MapContainer>
 		      <ReactMapGL
@@ -59,7 +63,7 @@ export default class Mapbox extends React.Component{
 		      >
 		      	Markers Here
 		      { /* FIRST MARK CITY, THEN MARK EVENTS */ }
-		      	<Marker latitude={ destination.latitude }longitude={ destination.longitude } key={this.props.location} >
+		      	<Marker latitude={ destination.latitude } longitude={ destination.longitude } key={ destination.name} >
 		      		<img src="https://image.flaticon.com/icons/svg/1397/1397898.svg" alt="Map Marker" onClick={()=>console.log("marker clicked")}/>
 		      	</Marker> 
 		      </ReactMapGL>

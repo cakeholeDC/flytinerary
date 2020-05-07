@@ -31,6 +31,8 @@ class TripDetails extends React.Component {
 	getCurrentTrip = () => {
 		if (this.props.trips.length > 0) {
 			const trip = this.props.trips.filter(trip => trip.id === parseInt(this.props.match.params.id), 10)[0]
+			trip.latitude = parseFloat(trip.latitude, 10)
+			trip.longitude = parseFloat(trip.longitude, 10)
 			return trip
 		} else return false
 	}
@@ -56,7 +58,7 @@ class TripDetails extends React.Component {
 					 	</div>
 				 	</div>
 				 	<div className="map">
-					 	<Mapbox location={trip.destination}/>
+					 	<Mapbox trip={trip}/>
 				 	</div>
 				</Trip>
 			: <ErrorPage />

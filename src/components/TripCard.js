@@ -20,6 +20,7 @@ const Card = styled.div`
 	}
     
 	.trip-content-flex {
+		text-align: left;
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-end;
@@ -66,6 +67,21 @@ const Card = styled.div`
 	    	text-align: right;
 	    }
     }
+
+    .trip-details-flex {
+    	display:flex;
+	    
+	    .trip-name,
+		.trip-location {
+			flex: 1;
+	    	font-size: .75em;
+	    	font-style: italic;
+	    }
+
+	    .trip-location {
+	    	text-align: right;
+	    }
+    }
 `
 
 class TripCard extends React.Component {
@@ -104,7 +120,10 @@ class TripCard extends React.Component {
 				<div className="trip-content-flex">
 					<div className="trip-overlay" >
 						<p className="trip-name">{nickname}</p>
-						<p className="trip-dates">{dates}</p>
+						<div className='trip-details-flex'>
+							<p className="trip-dates">{dates}</p>
+							<p className="trip-location">{destination}</p>
+						</div>
 						<div className='trip-metrics-flex'>
 							<p className="trip-travelers">{travelers}</p>
 							<p className="trip-events">{events}</p>

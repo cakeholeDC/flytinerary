@@ -16,8 +16,8 @@ const Content = styled.div`
 
 	// position: absolute;
 	// margin-left: 10%;
-	height: calc(100% - 62px); //62px is navbar height
 	// width: 80%;
+	height: calc(100% - 62px); //62px is navbar height
 
 	@media screen and ${device.tablet} {
 		width: 100%;
