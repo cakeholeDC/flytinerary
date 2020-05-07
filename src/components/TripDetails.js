@@ -7,9 +7,23 @@ import ErrorPage from './ErrorPage'
 
 //packages
 import styled from 'styled-components'
-import Map from './Map'
+import Mapbox from './Mapbox'
 
 const Trip = styled.div`
+	display: flex;
+	flex-direction: row;
+	text-aligh: left;
+	min-height: 100%;
+
+	.details {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.map {
+		flex: 1.5;
+	}
 `
 
 class TripDetails extends React.Component {
@@ -31,15 +45,19 @@ class TripDetails extends React.Component {
 		return (
 			trip
 				? <Trip>
-					<h1>{ trip.nickname }</h1>
-					<h2>{ trip.destination }</h2>
-					<h3>Organized by: { organizerName }</h3>
-				 	<div className="attendees">
-				 	<ul>Attendees:
-				 		{ trip.attendees.map(traveler => <li>{ traveler.username }</li>) }
-				 	</ul>
+					<div className="details">
+						<h1>{ trip.nickname }</h1>
+						<h2>{ trip.destination }</h2>
+						<h3>Organized by: { organizerName }</h3>
+					 	<div className="attendees">
+					 	<ul>Attendees:
+					 		{ trip.attendees.map(traveler => <li>{ traveler.username }</li>) }
+					 	</ul>
+					 	</div>
 				 	</div>
-				 	<Map location={trip.destination}/>
+				 	<div className="map">
+					 	<Mapbox location={trip.destination}/>
+				 	</div>
 				</Trip>
 			: <ErrorPage />
 		)
