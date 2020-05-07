@@ -8,67 +8,64 @@ import * as moment from 'moment'
 import styled from 'styled-components'
 
 const Card = styled.div`
-	// width: 12rem;
- //    height: 18.75rem;
 	width: 18rem;
     height: 10rem;
-	background: white; //shows through image when transparent
 	margin: .5rem .5rem;
-
 
 	img {
 		width: 100%;
 	    height: 100%;
 		object-fit: cover;
+		
 	}
-
-	.blocker {
-	    background-color: rgba(0,0,0,.4);
-	    width: inherit;
-	    height: 7%;
-	    margin-top: 7.5%;
-	    position: absolute;
-	    z-index: 1;
-	}
-
-	.trip-content {
+    
+	.trip-content-flex {
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-end;
 		position: absolute;
 		width: inherit;
 	    height: inherit;
-	    padding: .5rem;
-	    z-index: 999999;
+		
+		-webkit-transition: background-color .75s;
 
-	    p {
-	    	color: #fff;
-	    	margin-bottom: 0px;
-	    }
+		&:hover{
+			background-color: rgba(203, 203, 203, 0.3);
+		}
+	}
 
-	    .trip-name {
+	.trip-overlay {
+	    background-color: rgba(0,0,0,.5);
+	    padding: .6rem;
+	}
+
+    p {
+    	color: #fff;
+    	margin-bottom: 0px;
+	    
+	    &.trip-name {
 	    	font-weight: bold;
 	    }
 
-	    .trip-dates{
+	    &.trip-dates{
 	    	font-size: .8em;
 	    }
+    }
 
-	    .trip-metrics {
-	    	display:flex;
-
-	    }
-
+    .trip-metrics-flex {
+    	display:flex;
+	    
 	    .trip-travelers,
-    	.trip-events {
-    		flex: 1;
+		.trip-events {
+			flex: 1;
 	    	font-size: .75em;
 	    	font-style: italic;
 	    }
-	    .trip-events{
+
+	    .trip-events {
 	    	text-align: right;
 	    }
-	}
+    }
 `
 
 class TripCard extends React.Component {
@@ -104,16 +101,17 @@ class TripCard extends React.Component {
 		
 		return(
 			<Card className="trip-card" onClick={ this.loadTripShowPage }>
-				<div className="trip-content">
-					<p className="trip-name">{nickname}</p>
-					<p className="trip-dates">{dates}</p>
-					<div className='trip-metrics'>
-						<p className="trip-travelers">{travelers}</p>
-						<p className="trip-events">{events}</p>
+				<div className="trip-content-flex">
+					<div className="trip-overlay" >
+						<p className="trip-name">{nickname}</p>
+						<p className="trip-dates">{dates}</p>
+						<div className='trip-metrics-flex'>
+							<p className="trip-travelers">{travelers}</p>
+							<p className="trip-events">{events}</p>
+						</div>
 					</div>
 				</div>
-				<div className="blocker" />
-				<img src={image} />
+				<img src={image} alt={destination}/>
 			</Card>
 		)
 	}
@@ -127,31 +125,3 @@ const mapStateToProps = (state) => {
 }
 
 export default withRouter(connect(mapStateToProps)(TripCard))
-
-				    	// <Moment format="MMM, D">{start_datetime}</Moment> to&nbsp;
-				    	// <Moment format="MMM, D">{end_datetime}</Moment>
-
-
-				/*    	<Card onClick={ this.loadTripShowPage }>
-			    <img 
-			    	src={ image }
-			    	alt={ nickname } 
-			    	height="198px" 
-			    	style={{objectFit: "cover"}}/>
-				<Card.Content>
-				    <Card.Header>{ nickname }</Card.Header>
-				    <Card.Meta>
-				    	{ this.displayTripCardDateRange(start_datetime, end_datetime) }
-				    </Card.Meta>
-				    <Card.Description>{ destination }</Card.Description>
-				    <Card.Meta>{ `Organizer: ${organizer.name}` }</Card.Meta>
-			    </Card.Content>
-			    <Card.Content extra>
-				    <Icon name='user' />
-			    	{ `${attendees.length} Travelers`  }
-			    </Card.Content>
-			    <Button>
-				    <Icon name="calendar alternate" />
-			    	{ `View Flytinerary - ${event_timeline.length} Items` }
-			    </Button>
-			</Card>*/
