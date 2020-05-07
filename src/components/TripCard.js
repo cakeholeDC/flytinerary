@@ -4,7 +4,9 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 // import Moment from 'react-moment';
 // import 'moment-timezone';
-import * as moment from 'moment'
+// import * as moment from 'moment'
+import { displayTripCardDateRange } from '../utils/Helpers'
+
 import styled from 'styled-components'
 
 const Card = styled.div`
@@ -86,23 +88,23 @@ const Card = styled.div`
 
 class TripCard extends React.Component {
 
-	displayTripCardDateRange = (tripStart, tripEnd) => {
-		const start = moment(tripStart)
-		const end = moment(tripEnd)
+	// displayTripCardDateRange = (tripStart, tripEnd) => {
+	// 	const start = moment(tripStart)
+	// 	const end = moment(tripEnd)
 
-		// does the event occurr within a single year?
-		if (start.format('YYYY') === end.format('YYYY')) {
-			// does the event occurr within the a single month?
-			if (start.format("MM") === end.format("MM")) {
-				return `${start.format("MMM D")} – ${end.format("D, YYYY")}`
-			} else {
-				return `${start.format("MMM D")} – ${end.format("MMM D, YYYY")}`
-			}
-		} else {
-			// the event does not occur within a single year, and therefore cannot occurr within a single month
-			return `${start.format("MMM D, YYYY")} – ${end.format("MMM D, YYYY")}`
-		}
-	}
+	// 	// does the event occurr within a single year?
+	// 	if (start.format('YYYY') === end.format('YYYY')) {
+	// 		// does the event occurr within the a single month?
+	// 		if (start.format("MM") === end.format("MM")) {
+	// 			return `${start.format("MMM D")} – ${end.format("D, YYYY")}`
+	// 		} else {
+	// 			return `${start.format("MMM D")} – ${end.format("MMM D, YYYY")}`
+	// 		}
+	// 	} else {
+	// 		// the event does not occur within a single year, and therefore cannot occurr within a single month
+	// 		return `${start.format("MMM D, YYYY")} – ${end.format("MMM D, YYYY")}`
+	// 	}
+	// }
 
 	loadTripShowPage = () => {
 		this.props.history.push(`/trips/${this.props.trip.id}`)
@@ -111,7 +113,7 @@ class TripCard extends React.Component {
 	render(){
 		let { nickname, destination, image, start_datetime, end_datetime, organizer, attendees, event_timeline } = this.props.trip
 
-		let dates = this.displayTripCardDateRange(start_datetime, end_datetime)
+		let dates = displayTripCardDateRange(start_datetime, end_datetime)
 		let travelers = `${attendees.length} Attendee${attendees.length > 1 || attendees.length === 0 ? "s" : '' }`
 		let events = `${event_timeline.length} Event${event_timeline.length > 1 || event_timeline.length === 0 ? "s" : '' }`
 		

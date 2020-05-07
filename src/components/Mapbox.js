@@ -46,12 +46,16 @@ export default class Mapbox extends React.Component{
 
     render() {
     	const { viewport } = { viewport: {...this.state} }
+    	const trip = this.props.trip
     	// generate a central marker for the PRIMARY trip destination
     	const destination = { 
-    		latitude: this.props.trip.latitude,
-    		longitude: this.props.trip.longitude,
-    		name: this.props.trip.destination
+    		latitude: trip.latitude,
+    		longitude: trip.longitude,
+    		name: trip.destination
     	} 
+
+    	const MAP_PIN = "https://image.flaticon.com/icons/svg/1397/1397898.svg"
+    	const MAP_CITY = "https://img.icons8.com/office/16/000000/marker.png"
 	    return (
 	    	<MapContainer>
 		      <ReactMapGL
@@ -64,10 +68,22 @@ export default class Mapbox extends React.Component{
 		      	Markers Here
 		      { /* FIRST MARK CITY, THEN MARK EVENTS */ }
 		      	<Marker latitude={ destination.latitude } longitude={ destination.longitude } key={ destination.name} >
-		      		<img src="https://image.flaticon.com/icons/svg/1397/1397898.svg" alt="Map Marker" onClick={()=>console.log("marker clicked")}/>
+		      		<img src={ MAP_CITY } alt={destination.name} onClick={()=>console.log("marker clicked")}/>
 		      	</Marker> 
+		      	{
+		      		trip.event_timeline.map(event => { 
+		      			//convert strings to decimals
+						event.latitude = parseFloat(event.start_latitude, 10)
+						event.longitude = parseFloat(event.start_longitude, 10)
+						
+						return <Marker latitude={ event.latitude } longitude={ event.longitude } key={ event.name}>
+							<img src={ MAP_PIN } alt={ event.name } onClick={()=>console.log("marker clicked")}/>
+						</Marker>
+		      		})
+		      	}
 		      </ReactMapGL>
 	      </MapContainer>
 	    );
   }
+
 }
