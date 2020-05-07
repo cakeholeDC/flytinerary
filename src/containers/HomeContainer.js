@@ -15,7 +15,7 @@ class HomeContainer extends React.Component {
 		return (
 			<HomePage>
 				<h1>{`Welcome, ${this.props.currentUser.username}`}</h1>
-				<TripsContainer homepage/>
+				<TripsContainer/>
 			</HomePage>
 		)
 	}
@@ -24,7 +24,6 @@ class HomeContainer extends React.Component {
 const mapStateToProps = (state) => {
   return {
     currentUser: state.currentUser,
-    trips: state.trips
   }
 }
 

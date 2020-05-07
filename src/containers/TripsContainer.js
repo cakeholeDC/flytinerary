@@ -24,26 +24,8 @@ const Trips = styled.div`
 `
 
 class TripsContainer extends React.Component {
-	state={
-		startTrip: 0,
-		endTrip: null
-	}
-
-	componentDidMount(){
-		if (this.props.homepage) {
-			this.setState({
-				endTrip: this.state.startTrip + 3
-			})
-		} else {
-			this.setState({
-				endTrip: (this.props.trips.length - 1)
-			})
-		}
-	}
-
 	render(){
-		const trips = this.props.homepage && this.props.trips ? this.props.trips.sort((a, b) => (a.start_datetime > b.start_datetime ? 1 : -1)) : []
-
+		const trips = this.props.trips
 		return(
 			<Trips className="trips-container">
 				<h2>Your Trips</h2>

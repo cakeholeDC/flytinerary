@@ -1,11 +1,14 @@
+//dependencies
 import React from 'react';
 import './App.scss';
 import { connect } from 'react-redux'
-import { fetchingTrips, fetchingTravelers, setCurrentUser } from './redux/actions'
+import { Switch, Route } from "react-router-dom";
+//content
 import HeaderContainer from "./containers/HeaderContainer.js"
 import ContentContainer from "./containers/ContentContainer.js"
 import LoginContainer from './containers/LoginContainer.js'
-import { Switch, Route } from "react-router-dom";
+//actions
+import { getTripsByUserID, fetchingTravelers, setCurrentUser, resolveUserToken } from './redux/actions'
 
 const API_URL = "http://localhost:3000"
 const PROFILE_URL = `${API_URL}/profile`
@@ -16,21 +19,11 @@ class App extends React.Component {
     let token = localStorage.getItem("token")
 
     if (token) {
-      fetch(PROFILE_URL, {
-        method: "GET",
-        headers: {
-          "Authentication": token
-        }
-      })
-      .then(res => res.json())
-      .then(user => {
-        this.props.setCurrentUser(user)
-      })
+      this.props.resolveUserToken(token)
     }
   }
 
   render(){
-    // console.log("API", process.env.REACT_APP_MAPBOX_TOKEN)
     return (
       <div className="App">
         <HeaderContainer />
@@ -52,7 +45,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   setCurrentUser: (user) => { dispatch(setCurrentUser(user)) },
-  getTrips: (user) => { dispatch(fetchingTrips(user)) },
+  getTripsByUserID: (user) => { dispatch(getTripsByUserID(user)) },
+  resolveUserToken: (token) => { dispatch(resolveUserToken(token)) }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

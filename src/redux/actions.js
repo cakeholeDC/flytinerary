@@ -1,8 +1,6 @@
 export const FETCHED_TRIPS = "FETCHED_TRIPS"
-// export const FETCHED_TRAVELERS = "FETCHED_TRAVELERS"
 export const LOG_IN = "LOG_IN"
 
-// const PROD_URL = "https://flytinerary-api.herokuapp.com"
 const DEV_URL = "http://localhost:3000"
 
 // let BASE_URL = PROD_URL
@@ -10,12 +8,14 @@ let BASE_URL = DEV_URL
 
 const TRIPS_URL = `${BASE_URL}/trips`
 const TRAVELERS_URL = `${BASE_URL}/travelers`
-// const EVENTS_URL = `${BASE_URL}/events`
-const API_LOGIN = `${BASE_URL}/api/v1/login` 
 
-export function fetchingTrips(user){
+const API_LOGIN = `${BASE_URL}/api/v1/login` 
+const API_TOKEN = `${BASE_URL}/api/v1/resolve` 
+
+
+export function getTripsByUserID(id){
 	return (dispatch) => {
-		fetch(TRIPS_URL)
+		fetch(`${TRAVELERS_URL}/${id}/trips`)
 	      .then(res => res.json())
 	      .then(trips_array => {
 	      	dispatch(fetchedTrips(trips_array))
@@ -43,11 +43,29 @@ export function handleLogIn(user){
 			.then(apiResponse => {
 				if (!apiResponse.error) {
 					localStorage.setItem("token", apiResponse.jwt)
-					dispatch(setCurrentUser(JSON.parse(apiResponse.currentUser)))
+					let user = JSON.parse(apiResponse.currentUser)
+					dispatch(setCurrentUser(user))
+					dispatch(getTripsByUserID(user.id))
 				} else {
 					console.log(apiResponse)//@TODO error notice IZI toast
 				}
 			})
+	}
+}
+
+export function resolveUserToken(token){
+	return (dispatch) => {
+		fetch(API_TOKEN, {
+	        method: "GET",
+	        headers: {
+	          "Authentication": token
+	        }
+	      })
+	      .then(res => res.json())
+	      .then(user => {
+	        dispatch(setCurrentUser(user))
+	        dispatch(getTripsByUserID(user.id))
+	      })
 	}
 }
 

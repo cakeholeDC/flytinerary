@@ -35,7 +35,6 @@ class UserForm extends React.Component {
 		last_name: null,
 		username:null,
 		age: null,
-		gender: null,
 		password: null,
 	    isSignUp: false,
 	}
@@ -72,7 +71,6 @@ class UserForm extends React.Component {
 				last_name: this.state.last_name,
 				username: this.state.username,
 				age: this.state.age,
-				gender: this.state.gender,
 				password: this.state.password,
 			}
 		} else {
