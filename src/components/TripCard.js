@@ -8,10 +8,12 @@ import * as moment from 'moment'
 import styled from 'styled-components'
 
 const Card = styled.div`
-	width: 12rem;
-    height: 18.75rem;
+	// width: 12rem;
+ //    height: 18.75rem;
+	width: 18rem;
+    height: 10rem;
 	background: white; //shows through image when transparent
-	margin: 1rem .5rem;
+	margin: .5rem .5rem;
 
 
 	img {
@@ -54,6 +56,9 @@ const Card = styled.div`
 	    	font-size: .75em;
 	    	font-style: italic;
 	    }
+	    .trip-events{
+	    	text-align: right;
+	    }
 	}
 `
 
@@ -86,6 +91,7 @@ class TripCard extends React.Component {
 
 		let dates = this.displayTripCardDateRange(start_datetime, end_datetime)
 		let travelers = `${attendees.length} Attendee${attendees.length > 1 ? "s" : '' }`
+		let events = `${event_timeline.length} Event${event_timeline.length > 1 ? "s" : '' }`
 		
 		return(
 			<Card className="trip-card" onClick={ this.loadTripShowPage }>
@@ -94,7 +100,7 @@ class TripCard extends React.Component {
 					<p className="trip-dates">{dates}</p>
 					<div className='details'>
 						<p className="trip-travelers">{travelers}</p>
-						<p className="trip-events">{event_timeline.length}</p>
+						<p className="trip-events">{events}</p>
 					</div>
 				</div>
 				<img src={image} />
