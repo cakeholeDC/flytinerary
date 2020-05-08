@@ -1,5 +1,6 @@
 import React from 'react'
 import TripsContainer from './TripsContainer.js'
+import NewTrip from '../components/NewTrip'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 
@@ -15,6 +16,7 @@ class HomeContainer extends React.Component {
 		return (
 			<HomePage>
 				<h1>{`Welcome, ${this.props.currentUser.username}`}</h1>
+				<NewTrip />
 				<TripsContainer/>
 			</HomePage>
 		)

@@ -14,8 +14,8 @@ class TripModal extends React.Component {
 	}
 
 	getPlaceholderImage = (query) => {
-		const placeholder = `https://source.unsplash.com/random/500x500/?${query}`
-		return placeholder
+		const image = this.state.destination ? this.state.destination : this.props.search
+		return `https://source.unsplash.com/random/500x500/?${ image }`
 	}
 
 	handleTripFormChange(event){
@@ -26,11 +26,11 @@ class TripModal extends React.Component {
 
 	handleTripFormSubmit(event) {
 		event.preventDefault()
-		debugger
 	}
 
 	render(){
 		const moment = require('moment');
+		// const placeholderImage = this.state.image ? this.state.image : this.getPlaceholderImage(this.props.search)
 
 		return(
 			<Modal
@@ -44,7 +44,7 @@ class TripModal extends React.Component {
 			    	{ this.state.quote.author ? <p><em><small>-{ this.state.quote.author }</small></em></p> : null }
 			    </Modal.Header>
 			    <Modal.Content image>
-				    	<Image wrapped size="medium" src={ this.state.image ? this.state.image : this.getPlaceholderImage(this.props.search) } />
+				    	<Image wrapped size="medium" src={ this.getPlaceholderImage() } onError={ event => event.target.src="https://images.unsplash.com/photo-1524850011238-e3d235c7d4c9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3372&q=80" } />
 			    	<Modal.Description style={{width: "100%"}}>
 				    	<Form 
 					    	onChange={ event => this.handleTripFormChange(event) }

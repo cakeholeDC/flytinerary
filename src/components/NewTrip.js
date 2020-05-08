@@ -1,5 +1,10 @@
 import React from 'react'
-import TripModal from './TripModal.js'
+// import TripModal from './TripModal.js'
+import styled from 'styled-components'
+
+const TripCreator = styled.div`
+	text-align: center;
+`
 
 class NewTrip extends React.Component {
 	state = {
@@ -7,17 +12,11 @@ class NewTrip extends React.Component {
 		showTripModal: false
 	}
 
-	toggleTripModal = () => {
-		this.setState({
-			showTripModal: !this.state.showTripModal
-		})
-	}
+	// ACTION TO SHOW FORM
 
-	handleNewTripSearchFormSubmit = (event) =>{
-		event.preventDefault()
-		this.toggleTripModal()
-		event.target.reset()
-	}
+	// ACTION TO SUBMIT FORM
+
+	// ACTION TO EDIT
 
 	handleSearchFieldChange(event){
 		this.setState({
@@ -27,8 +26,8 @@ class NewTrip extends React.Component {
 
 	render (){
 		return (
-			<div id="new-trip-container">
-				<h1>Where to?</h1>
+			<TripCreator>
+				<button>Schedule a Trip</button>
 				<form 
 					onSubmit={ this.handleNewTripSearchFormSubmit }
 					onChange={ event => this.handleSearchFieldChange(event) }
@@ -36,8 +35,7 @@ class NewTrip extends React.Component {
 					<input name="search" placeholder="Bali, Indonesia"></input>
 					<button type="submit" name='submit' >GO!</button>
 				</form>
-				<TripModal status={ this.state.showTripModal } close={ this.toggleTripModal } search={ this.state.search }/>
-			</div>
+			</TripCreator>
 		)
 	}
 }

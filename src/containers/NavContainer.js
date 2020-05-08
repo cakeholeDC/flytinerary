@@ -5,8 +5,9 @@ import { connect } from 'react-redux'
 
 
 const Nav = styled.div`
-	width: 70%;
-	margin: auto;
+	// width: 70%;
+	// margin: auto;
+	flex: 5;
 	display: flex;
 	background-color: pink;
 	font-size: 1.25rem;

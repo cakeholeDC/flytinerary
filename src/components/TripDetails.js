@@ -97,6 +97,10 @@ class TripDetails extends React.Component {
 		return `${user.first_name} ${user.last_name}`
 	}
 
+	makeTimelineAgenda = () => {
+		return "timeline"
+	}
+
 	render(){
 		console.log(this.props)
 		const trip = this.getCurrentTrip()
@@ -117,6 +121,10 @@ class TripDetails extends React.Component {
 							</div>
 						</div>
 						<div className="trip-body">
+							<div className="events">
+							TIMELINE
+								{trip.event_timeline.map(event => <p>{event.event_type}</p>)}
+							</div>
 							<div className="contact">
 								<div className="organizer">
 									<p>Questions?</p>

@@ -132,7 +132,7 @@ class TripCard extends React.Component {
 						</div>
 					</div>
 				</div>
-				<img src={image} alt={destination}/>
+				<img src={image} alt={destination} nError={ event => event.target.src="https://images.unsplash.com/photo-1524850011238-e3d235c7d4c9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3372&q=80" }/>
 			</Card>
 		)
 	}

@@ -6,10 +6,11 @@ import { device } from '../utils/device'
 import { Link } from 'react-router-dom'
 
 const Menu = styled.div`
-	width: 80%;
+	// width: 80%;
+	width: inherit;
 
 	@media screen and ${device.tablet} {
-		width: 94%;
+		// width: 94%;
 	}
 
 	margin: auto;
