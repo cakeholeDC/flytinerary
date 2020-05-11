@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'  //to match url params
 //components
 import ErrorPage from './ErrorPage'
+import { CalendarModule } from './CalendarModule'
 // import EventContainer from '../containers/EventContainer.js'
 import { displayTripCardDateRange } from '../utils/Helpers'
 
@@ -80,6 +81,10 @@ const Trip = styled.div`
 		padding-left: 1rem;
 	}
 
+	.events, .organizer, .attendees {
+		border: 1px solid black;
+	}
+
 `
 
 class TripDetails extends React.Component {
@@ -97,8 +102,8 @@ class TripDetails extends React.Component {
 		return `${user.first_name} ${user.last_name}`
 	}
 
-	makeTimelineAgenda = () => {
-		return "timeline"
+	makeTimelineAgenda = (trip) => {
+		return <CalendarModule initial={trip.start_datetime} events={trip.event_timeline} />
 	}
 
 	render(){
@@ -122,8 +127,8 @@ class TripDetails extends React.Component {
 						</div>
 						<div className="trip-body">
 							<div className="events">
-							TIMELINE
-								{trip.event_timeline.map(event => <p>{event.event_type}</p>)}
+								TIMELINE
+								{this.makeTimelineAgenda(trip)}
 							</div>
 							<div className="contact">
 								<div className="organizer">
