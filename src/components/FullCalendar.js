@@ -19,7 +19,7 @@ export default class Calendar extends React.Component {
     return (
       <FullCalendar 
       	plugins={[ dayGridPlugin ]} 
-      	defaultView="dayGridMonth" 
+      	defaultView="agendaWeek" 
       	defaultDate={events[0].start}
       	events={events}
       	dateClick={this.handleDateClick}
