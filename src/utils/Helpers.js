@@ -17,3 +17,19 @@ export function displayTripCardDateRange(tripStart, tripEnd) {
 			return `${start.format("MMM D, YYYY")} – ${end.format("MMM D, YYYY")}`
 		}
 	}
+
+export function getEventColor(event){
+	switch(event.event_type.toLowerCase()) {
+		case "flight":
+			return "#BF0D3E"
+		case "lodging":
+			return "#009CDE"
+		case "reservation":
+			return "#FFD100"
+		case "meal":
+			return "#00B140"
+		case "other":
+			return "#ED8B00"
+		
+	}
+}

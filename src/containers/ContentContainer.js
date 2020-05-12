@@ -12,12 +12,9 @@ import { connect } from 'react-redux'
 
 
 const Content = styled.div`
-	background-color: gray;
-
-	// position: absolute;
-	// margin-left: 10%;
-	// width: 80%;
-	height: calc(100% - 62px); //62px is navbar height
+	// background-color: gray;
+	// height: 100%;
+	height: 'calc(100vh - (62px / 2))';
 
 	@media screen and ${device.tablet} {
 		width: 100%;
