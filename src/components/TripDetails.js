@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'  //to match url params
 //components
 import ErrorPage from './ErrorPage'
-// import CalendarModule from './CalendarModule'
 import FullCalendar from './FullCalendar'
 // import EventContainer from '../containers/EventContainer.js'
 import { displayTripCardDateRange, getEventColor } from '../utils/Helpers'
@@ -118,22 +117,6 @@ class TripDetails extends React.Component {
 	getTravelerName(user){
 		return `${user.first_name} ${user.last_name}`
 	}
-
-	// getEventColor(event){
-	// 	switch(event.event_type.toLowerCase()) {
-	// 		case "flight":
-	// 			return "#BF0D3E"
-	// 		case "lodging":
-	// 			return "#009CDE"
-	// 		case "reservation":
-	// 			return "#FFD100"
-	// 		case "meal":
-	// 			return "#00B140"
-	// 		case "other":
-	// 			return "#ED8B00"
-			
-	// 	}
-	// }
 
 	renderCalendar = (trip) => {
 		let events = trip ? trip.event_timeline.map(event => {

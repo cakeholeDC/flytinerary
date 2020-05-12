@@ -71,7 +71,6 @@ export default class MyCalendar extends React.Component {
   // }
 
   handleDateClick = arg => {
-    debugger
     let newEvent = window.prompt("Would you like to add an event to " + arg.dateStr + " ?")
     // if (window.confirm("Would you like to add an event to " + arg.dateStr + " ?")) {
     if (newEvent) {
