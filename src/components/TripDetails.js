@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'  //to match url params
 //components
 import ErrorPage from './ErrorPage'
-import CalendarModule from './CalendarModule'
+// import CalendarModule from './CalendarModule'
+import FullCalendar from './FullCalendar'
 // import EventContainer from '../containers/EventContainer.js'
 import { displayTripCardDateRange } from '../utils/Helpers'
 
@@ -106,8 +107,20 @@ class TripDetails extends React.Component {
 		return `${user.first_name} ${user.last_name}`
 	}
 
-	makeTimelineAgenda = (trip) => {
-		return <CalendarModule trip={trip} />
+	renderCalendar = (trip) => {
+		let events = trip ? trip.event_timeline.map(event => {
+			return {
+				id: event.id,
+				allDay: false,	
+				start: event.start_datetime ? event.start_datetime : trip.start_datetime,
+				end: event.end_datetime,
+				title: event.event_type,
+				url: `/events/${event.id}`,
+				editable: true
+			}
+		}) : false
+		// return <CalendarModule trip={trip} />
+		return <FullCalendar trip={trip} events={events}/>
 	}
 
 	render(){
@@ -116,8 +129,7 @@ class TripDetails extends React.Component {
 		const organizerName = trip ? (trip.organizer.first_name + ' ' + trip.organizer.last_name) : null
 		const attendees = !trip ? null : trip.attendees.sort((a, b) => a.last_name > b.last_name ? 1 : -1)
 		const dates = displayTripCardDateRange(trip.start_datetime, trip.end_datetime)
-		const timeline = this.makeTimelineAgenda(trip)
-
+		const timeline = this.renderCalendar(trip)
 		return (
 			trip
 				? <Trip>
