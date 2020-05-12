@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'  //to match url params
 //components
 import ErrorPage from './ErrorPage'
-import { CalendarModule } from './CalendarModule'
+import CalendarModule from './CalendarModule'
 // import EventContainer from '../containers/EventContainer.js'
 import { displayTripCardDateRange } from '../utils/Helpers'
 
@@ -24,7 +24,7 @@ const Trip = styled.div`
 	}
 
 	.map {
-		flex: 1.5;
+		flex: 1;
 	}
 
 	.trip-header {
@@ -92,10 +92,14 @@ class TripDetails extends React.Component {
 	getCurrentTrip = () => {
 		if (this.props.trips.length > 0) {
 			const trip = this.props.trips.filter(trip => trip.id === parseInt(this.props.match.params.id), 10)[0]
+			
 			trip.latitude = parseFloat(trip.latitude, 10)
 			trip.longitude = parseFloat(trip.longitude, 10)
+			
 			return trip
-		} else return false
+		} else {
+			return false
+		}
 	}
 
 	getTravelerName(user){
@@ -103,17 +107,17 @@ class TripDetails extends React.Component {
 	}
 
 	makeTimelineAgenda = (trip) => {
-		return <CalendarModule initial={trip.start_datetime} events={trip.event_timeline} />
+		return <CalendarModule trip={trip} />
 	}
 
 	render(){
-		console.log(this.props)
 		const trip = this.getCurrentTrip()
-		console.log("trip", trip)
-		// const destination = trip ? trip.destination : null
+		
 		const organizerName = trip ? (trip.organizer.first_name + ' ' + trip.organizer.last_name) : null
 		const attendees = !trip ? null : trip.attendees.sort((a, b) => a.last_name > b.last_name ? 1 : -1)
-		// debugger
+		const dates = displayTripCardDateRange(trip.start_datetime, trip.end_datetime)
+		const timeline = this.makeTimelineAgenda(trip)
+
 		return (
 			trip
 				? <Trip>
@@ -121,14 +125,13 @@ class TripDetails extends React.Component {
 						<div className="trip-header">
 							<h1 className="nickname">{ trip.nickname }</h1>
 							<div className="subhead">
-								<p className="dates">{ displayTripCardDateRange(trip.start_datetime, trip.end_datetime) }</p>
+								<p className="dates">{ dates }</p>
 								<p className="destination">{ trip.destination }</p>
 							</div>
 						</div>
 						<div className="trip-body">
 							<div className="events">
-								TIMELINE
-								{this.makeTimelineAgenda(trip)}
+								{ timeline }
 							</div>
 							<div className="contact">
 								<div className="organizer">
