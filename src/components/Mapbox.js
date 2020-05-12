@@ -76,8 +76,8 @@ export default class Mapbox extends React.Component{
 						event.latitude = parseFloat(event.start_latitude, 10)
 						event.longitude = parseFloat(event.start_longitude, 10)
 						
-						return <Marker latitude={ event.latitude } longitude={ event.longitude } key={ event.name}>
-							<img src={ MAP_PIN } alt={ event.name } onClick={()=>console.log("marker clicked")}/>
+						return <Marker latitude={ event.latitude } longitude={ event.longitude } key={ event.name }>
+							<img src={ MAP_PIN } alt={ event.name } onClick={()=>console.log("marker clicked")} key={ event.name }/>
 						</Marker>
 		      		})
 		      	}

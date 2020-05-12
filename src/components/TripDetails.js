@@ -86,10 +86,21 @@ const Trip = styled.div`
 		border: 1px solid black;
 	}
 
+	.key {
+		width: 80%;
+		margin: auto;
+		display: flex;
+
+		.color {
+			text-align: center;
+			padding: 0.25rem 0;
+			flex: 1;
+			width: 3rem;
+		}
+	}
 `
 
 class TripDetails extends React.Component {
-
 	getCurrentTrip = () => {
 		if (this.props.trips.length > 0) {
 			const trip = this.props.trips.filter(trip => trip.id === parseInt(this.props.match.params.id), 10)[0]
@@ -107,8 +118,26 @@ class TripDetails extends React.Component {
 		return `${user.first_name} ${user.last_name}`
 	}
 
+	getEventColor(event){
+		switch(event.event_type.toLowerCase()) {
+			case "flight":
+				return "#BF0D3E"
+			case "lodging":
+				return "#009CDE"
+			case "reservation":
+				return "#FFD100"
+			case "meal":
+				return "#00B140"
+			case "other":
+				return "#ED8B00"
+			
+		}
+	}
+
 	renderCalendar = (trip) => {
 		let events = trip ? trip.event_timeline.map(event => {
+			let color = this.getEventColor(event)
+			//map event object to FullCalendar key names //@todo, fix in db?
 			return {
 				id: event.id,
 				allDay: false,	
@@ -116,12 +145,14 @@ class TripDetails extends React.Component {
 				end: event.end_datetime,
 				title: event.event_type,
 				url: `/events/${event.id}`,
-				editable: true
+				editable: true,
+				backgroundColor: color,
+				borderColor: color
 			}
 		}) : false
-		// return <CalendarModule trip={trip} />
-		return <FullCalendar trip={trip} events={events}/>
+		return <FullCalendar trip={ trip } events={ events } />
 	}
+
 
 	render(){
 		const trip = this.getCurrentTrip()
@@ -130,6 +161,7 @@ class TripDetails extends React.Component {
 		const attendees = !trip ? null : trip.attendees.sort((a, b) => a.last_name > b.last_name ? 1 : -1)
 		const dates = displayTripCardDateRange(trip.start_datetime, trip.end_datetime)
 		const timeline = this.renderCalendar(trip)
+
 		return (
 			trip
 				? <Trip>
@@ -144,6 +176,13 @@ class TripDetails extends React.Component {
 						<div className="trip-body">
 							<div className="events">
 								{ timeline }
+								<div className="key">
+									<div className="color" style={{ backgroundColor: "#BF0D3E" }}>flight</div>
+									<div className="color" style={{ backgroundColor: "#009CDE" }}>lodging</div>
+									<div className="color" style={{ backgroundColor: "#FFD100" }}>reservation</div>
+									<div className="color" style={{ backgroundColor: "#00B140" }}>meal</div>
+									<div className="color" style={{ backgroundColor: "#ED8B00" }}>other</div>
+								</div>
 							</div>
 							<div className="contact">
 								<div className="organizer">
@@ -157,7 +196,7 @@ class TripDetails extends React.Component {
 								<div className="attendees">
 									<p>{attendees.length} people attending</p>
 								 	<ul >
-								 		{ attendees.map(traveler => <li>{ this.getTravelerName(traveler) }</li>) }
+								 		{ attendees.map(traveler => <li key={traveler.username}>{ this.getTravelerName(traveler) }</li>) }
 								 	</ul>
 							 	</div>
 							 </div>
@@ -171,19 +210,6 @@ class TripDetails extends React.Component {
 		)
 	}
 }
-			// this.props.trips.length > 0 
-			// ? <div>
-			// 	<h1>{ this.getCurrentTrip().nickname }</h1>
-			// 	<h2>{ destination }</h2>
-			// 	<h3>Organized by: { organizerName }</h3>
-			// 	<div className="attendees">
-			// 	<ul>Attendees:
-			// 		{ this.getCurrentTrip().attendees.map(traveler => <li>{ traveler.name }</li>) }
-			// 	</ul>
-			// 	</div>
-			// 	<Map location={destination}/>
-			// </div>
-			// : null
 
 const mapStateToProps = (state) => {
   return {
