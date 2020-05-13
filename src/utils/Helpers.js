@@ -18,8 +18,8 @@ export function displayTripCardDateRange(tripStart, tripEnd) {
 		}
 	}
 
-export function getEventColor(event){
-	switch(event.event_type.toLowerCase()) {
+export function getCategoryColor(category){
+	switch(category.toLowerCase()) {
 		case "flight":
 			return "#BF0D3E"
 		case "lodging":

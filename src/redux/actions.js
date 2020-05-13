@@ -1,4 +1,5 @@
 export const FETCHED_TRIPS = "FETCHED_TRIPS"
+export const FETCHED_CATEGORIES = "FETCHED_CATEGORIES"
 export const LOG_IN = "LOG_IN"
 
 const DEV_URL = "http://localhost:3000"
@@ -7,7 +8,8 @@ const DEV_URL = "http://localhost:3000"
 let BASE_URL = DEV_URL
 
 const TRIPS_URL = `${BASE_URL}/trips`
-const TRAVELERS_URL = `${BASE_URL}/travelers`
+const USERS_URL = `${BASE_URL}/users`
+const CATEGORIES_URL = `${BASE_URL}/categories`
 
 const API_LOGIN = `${BASE_URL}/api/v1/login` 
 const API_TOKEN = `${BASE_URL}/api/v1/resolve` 
@@ -15,16 +17,31 @@ const API_TOKEN = `${BASE_URL}/api/v1/resolve`
 
 export function getTripsByUserID(id){
 	return (dispatch) => {
-		fetch(`${TRAVELERS_URL}/${id}/trips`)
+		fetch(`${USERS_URL}/${id}/trips`)
 	      .then(res => res.json())
 	      .then(trips_array => {
-	      	dispatch(fetchedTrips(trips_array))
+	      	dispatch(storeTrips(trips_array))
 	      })
 	}
 }
 
-export function fetchedTrips(trips_array){
+export function storeTrips(trips_array){
 	return { type: FETCHED_TRIPS, payload: trips_array }
+}
+
+export function fetchEventCategories(){
+	return (dispatch) => {
+		fetch(CATEGORIES_URL)
+	      .then(res => res.json())
+	      .then(categories_array => {
+	      	dispatch(storeCategories(categories_array))
+	      })
+	}
+}
+
+
+export function storeCategories(categoriesArray){
+	return { type: FETCHED_CATEGORIES, payload: categoriesArray }
 }
 
 export function handleLogIn(user){

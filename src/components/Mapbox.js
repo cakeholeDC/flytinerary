@@ -3,7 +3,6 @@ import ReactMapGL from 'react-map-gl'
 import { Marker } from 'react-map-gl'
 import styled from 'styled-components'
 // HOME 38.9240973,-77.0274758
-import { getEventColor } from '../utils/Helpers'
 
 
 const MapContainer = styled.div`
@@ -46,24 +45,6 @@ export default class Mapbox extends React.Component{
 			})
 	}
 
-	getEventPin(event){
-		switch(event.event_type.toLowerCase()) {
-			case "flight":
-				return "/images/icons/map/red-marker.png"
-			case "lodging":
-				return "/images/icons/map/blue-marker.png"
-			case "reservation":
-				return "/images/icons/map/yellow-marker.png"
-			case "meal":
-				return "/images/icons/map/green-marker.png"
-			case "other":
-				return "/images/icons/map/orange-marker.png"
-			default:
-				return 'https://image.flaticon.com/icons/svg/1397/1397898.svg'
-			
-		}
-	}
-
     render() {
     	const { viewport } = { viewport: {...this.state} }
     	const trip = this.props.trip
@@ -94,11 +75,11 @@ export default class Mapbox extends React.Component{
 		      	{
 		      		trip.event_timeline.map(event => { 
 		      			//convert strings to decimals
-						event.latitude = parseFloat(event.start_latitude, 10)
-						event.longitude = parseFloat(event.start_longitude, 10)
+						event.latitude = parseFloat(event.latitude, 10)
+						event.longitude = parseFloat(event.longitude, 10)
 						
-						return <Marker latitude={ event.latitude } longitude={ event.longitude } key={ event.name }>
-							<img src={ this.getEventPin(event) } alt={ event.name } onClick={()=>console.log("marker clicked")} key={ event.name } onError={event => event.target.src="/images/icons/map/red-marker.png"} />
+						return <Marker latitude={ event.latitude } longitude={ event.longitude } key={ event.title }>
+							<img src={ EVENT_PIN } alt={ event.name } onClick={()=>console.log("marker clicked")} key={ event.title } onError={event => event.target.src="/images/icons/map/red-marker.png"} />
 						</Marker>
 		      		})
 		      	}

@@ -1,10 +1,6 @@
 import React from 'react'
 import { Button, Icon } from 'semantic-ui-react'
 import { withRouter } from 'react-router-dom'
-import { connect } from 'react-redux'
-// import Moment from 'react-moment';
-// import 'moment-timezone';
-// import * as moment from 'moment'
 import { displayTripCardDateRange } from '../utils/Helpers'
 
 import styled from 'styled-components'
@@ -88,32 +84,14 @@ const Card = styled.div`
 
 class TripCard extends React.Component {
 
-	// displayTripCardDateRange = (tripStart, tripEnd) => {
-	// 	const start = moment(tripStart)
-	// 	const end = moment(tripEnd)
-
-	// 	// does the event occurr within a single year?
-	// 	if (start.format('YYYY') === end.format('YYYY')) {
-	// 		// does the event occurr within the a single month?
-	// 		if (start.format("MM") === end.format("MM")) {
-	// 			return `${start.format("MMM D")} – ${end.format("D, YYYY")}`
-	// 		} else {
-	// 			return `${start.format("MMM D")} – ${end.format("MMM D, YYYY")}`
-	// 		}
-	// 	} else {
-	// 		// the event does not occur within a single year, and therefore cannot occurr within a single month
-	// 		return `${start.format("MMM D, YYYY")} – ${end.format("MMM D, YYYY")}`
-	// 	}
-	// }
-
 	loadTripShowPage = () => {
 		this.props.history.push(`/trips/${this.props.trip.id}`)
 	}
 
 	render(){
-		let { nickname, destination, image, start_datetime, end_datetime, organizer, attendees, event_timeline } = this.props.trip
+		let { title, destination, image, start, end, organizer, attendees, event_timeline } = this.props.trip
 
-		let dates = displayTripCardDateRange(start_datetime, end_datetime)
+		let dates = displayTripCardDateRange(start, end)
 		let travelers = `${attendees.length} Attendee${attendees.length > 1 || attendees.length === 0 ? "s" : '' }`
 		let events = `${event_timeline.length} Event${event_timeline.length > 1 || event_timeline.length === 0 ? "s" : '' }`
 		
@@ -121,28 +99,21 @@ class TripCard extends React.Component {
 			<Card className="trip-card" onClick={ this.loadTripShowPage }>
 				<div className="trip-content-flex">
 					<div className="trip-overlay" >
-						<p className="trip-name">{nickname}</p>
+						<p className="trip-name">{ title }</p>
 						<div className='trip-details-flex'>
-							<p className="trip-dates">{dates}</p>
-							<p className="trip-location">{destination}</p>
+							<p className="trip-dates">{ dates }</p>
+							<p className="trip-location">{ destination }</p>
 						</div>
 						<div className='trip-metrics-flex'>
-							<p className="trip-travelers">{travelers}</p>
-							<p className="trip-events">{events}</p>
+							<p className="trip-travelers">{ travelers }</p>
+							<p className="trip-events">{ events }</p>
 						</div>
 					</div>
 				</div>
-				<img src={image} alt={destination} nError={ event => event.target.src="https://images.unsplash.com/photo-1524850011238-e3d235c7d4c9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3372&q=80" }/>
+				<img src={image} alt={destination} onError={ event => event.target.src="https://images.unsplash.com/photo-1524850011238-e3d235c7d4c9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3372&q=80" }/>
 			</Card>
 		)
 	}
 }
 
-const mapStateToProps = (state) => {
-  return {
-    currentUser: state.currentUser,
-    trips: state.trips
-  }
-}
-
-export default withRouter(connect(mapStateToProps)(TripCard))
+export default withRouter(TripCard)
