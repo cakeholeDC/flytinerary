@@ -1,25 +1,42 @@
 import React from 'react'
+import { connect } from 'react-redux'
+
+// FULL CALENDAR PLUGINS
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from "@fullcalendar/timegrid"
 import interactionPlugin from "@fullcalendar/interaction"
 import listPlugin from '@fullcalendar/list'
-// import { Calendar } from '@fullcalendar/core';
 
+// DEPENDENCIES
+import EventModal from './EventModal'
 import moment from 'moment'
 
-export default class MyCalendar extends React.Component {
+class MyCalendar extends React.Component {
   // calendarComponentRef = React.createRef();
-
 
 	constructor(props){
 		super(props)
 		
     this.state = {
 			events: this.props.events,
-      isAgenda: false
+      isAgenda: false,
+      eventModal: false,
+      modalData: null
 		}
 	}
+
+  toggleEventModal = (arg) => {
+    this.setState({
+      eventModal: !this.state.eventModal,
+      modalData: arg
+    })
+  }
+  
+
+  handleDateClick = arg => {
+    this.toggleEventModal(arg) 
+  }
 
   render() {
   	const events = this.state.events
@@ -49,41 +66,25 @@ export default class MyCalendar extends React.Component {
           dateClick={ this.handleDateClick }
           nowIndicator
         />
+        <EventModal 
+          showModal={this.state.eventModal} 
+          closeModal={() => this.toggleEventModal()} 
+          calendarData={this.state.modalData} 
+          trip={this.props.trip} />
       </div>
     )
   }
 
-  // toggleView = () => {
-  //   let calendar = this.calendarComponentRef.current.getApi();
-  //   if (!this.state.isAgenda){
-  //     calendar.changeView("listWeek");
-      
-  //     this.setState({
-  //       isAgenda: !this.state.isAgenda
-  //     })
-  //   } else {
-  //     // calendar.changeView("dayGridMonth");
-      
-  //     this.setState({
-  //       isAgenda: !this.state.isAgenda
-  //     })
-  //   }
-  // }
 
-  handleDateClick = arg => {
-    let newEvent = window.prompt("Would you like to add an event to " + arg.dateStr + " ?")
-    // if (window.confirm("Would you like to add an event to " + arg.dateStr + " ?")) {
-    if (newEvent) {
-      this.setState({
-        // add new event data
-        events: this.state.events.concat({
-          // creates a new array
-          title: newEvent,
-          start: arg.date,
-          allDay: arg.allDay
-        })
-      })
-    }
-  }
 
 }
+
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.currentUser,
+  }
+}
+
+
+
+export default connect(mapStateToProps)(MyCalendar)
