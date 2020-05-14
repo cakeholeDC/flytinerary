@@ -30,20 +30,7 @@ export default class Mapbox extends React.Component{
 		})
 	}
 
-	 mapboxGeolocate = (query, type=null) => {
-	 	// type will ultimately be used to change the endpoint as needed, default is string lookup
-		const geoLocateURL = `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?access_token=${ process.env.REACT_APP_MAPBOX_TOKEN }`
-
-		return fetch(geoLocateURL)
-			.then(res => res.json())
-			.then(json => {
-				const coordinates = { 
-					latitude: json.features[0].center[1],
-					longitude: json.features[0].center[0]
-				}
-				return coordinates
-			})
-	}
+	
 
     render() {
     	const { viewport } = { viewport: {...this.state} }
@@ -89,3 +76,18 @@ export default class Mapbox extends React.Component{
   }
 
 }
+
+export function mapboxGeolocate(query, type=null) {
+	 	// type will ultimately be used to change the endpoint as needed, default is string lookup
+		const geoLocateURL = `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?access_token=${ process.env.REACT_APP_MAPBOX_TOKEN }`
+
+		return fetch(geoLocateURL)
+			.then(res => res.json())
+			.then(json => {
+				const coordinates = { 
+					latitude: json.features[0].center[1],
+					longitude: json.features[0].center[0]
+				}
+				return coordinates
+			})
+	}

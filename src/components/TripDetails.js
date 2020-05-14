@@ -202,7 +202,7 @@ class TripDetails extends React.Component {
 						<div className="events">
 							{ timeline }
 							<div className="key">
-								{ this.props.categories.map(c => <div className="color" style={{ backgroundColor: `${getCategoryColor(c.name)}`}}>{c.name}</div>) } 
+								{ this.props.categories.map(c => <div key={c.name} className="color" style={{ backgroundColor: `${getCategoryColor(c.name)}`}}>{c.name}</div>) } 
 							</div>
 						</div>
 				 	</div>

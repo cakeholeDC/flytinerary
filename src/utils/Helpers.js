@@ -33,3 +33,29 @@ export function getCategoryColor(category){
 		
 	}
 }
+
+export function toTitleCase(str){
+	str = str.toLowerCase().split(' ');
+	let final = [ ];
+   
+	for(let word of str){
+      final.push(word.charAt(0).toUpperCase()+ word.slice(1));
+    }
+
+	return final.join(' ')
+}
+
+export function mapboxGeolocate(query, type=null) {
+	 	// type will ultimately be used to change the endpoint as needed, default is string lookup
+		const geoLocateURL = `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?access_token=${ process.env.REACT_APP_MAPBOX_TOKEN }`
+
+		return fetch(geoLocateURL)
+			.then(res => res.json())
+			.then(json => {
+				const coordinates = { 
+					latitude: json.features[0].center[1],
+					longitude: json.features[0].center[0]
+				}
+				return coordinates
+			})
+	}

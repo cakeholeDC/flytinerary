@@ -10,6 +10,7 @@ let BASE_URL = DEV_URL
 const TRIPS_URL = `${BASE_URL}/trips`
 const USERS_URL = `${BASE_URL}/users`
 const CATEGORIES_URL = `${BASE_URL}/categories`
+const EVENTS_URL = `${BASE_URL}/events`
 
 const API_LOGIN = `${BASE_URL}/api/v1/login` 
 const API_TOKEN = `${BASE_URL}/api/v1/resolve` 
@@ -39,10 +40,29 @@ export function fetchEventCategories(){
 	}
 }
 
-
 export function storeCategories(categoriesArray){
 	return { type: FETCHED_CATEGORIES, payload: categoriesArray }
 }
+
+export function postNewEvent(eventObj){
+	return (dispatch) => {
+		const eventPost = {
+			method: "POST",
+			headers: {
+				'Content-Type': "application/json",
+				"Accept" : "application/json"
+			},
+			body: JSON.stringify(eventObj)
+		}
+
+		fetch(EVENTS_URL, eventPost)
+			.then(res => res.json())
+			.then(json => console.log("POSTED EVENT", json))
+			//CAL STORE NEW EVENT
+	}
+}
+
+// STORE NEW EVENT HERE
 
 export function handleLogIn(user){
 	return (dispatch) => {
