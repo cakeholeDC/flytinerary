@@ -124,22 +124,8 @@ class TripDetails extends React.Component {
 		return `${user.first_name} ${user.last_name}`
 	}
 
-	// getEventColor = (category) =>{
-	// 	switch(category.name.toLowerCase()) {
-	// 		case "flight":
-	// 			return "#BF0D3E"
-	// 		case "lodging":
-	// 			return "#009CDE"
-	// 		case "reservation":
-	// 			return "#FFD100"
-	// 		case "meal":
-	// 			return "#00B140"
-	// 		case "other":
-	// 			return "#ED8B00"
-	// 	}
-	// }
-
 	renderCalendar = (trip) => {
+		//@TODO change to trip.events once the endpoint changes. 
 		let events = trip ? trip.event_timeline.map(event => {
 			console.log(event)
 			let category = this.props.categories.find(c => c.id === event.category_id)
@@ -147,16 +133,22 @@ class TripDetails extends React.Component {
 			//map event object to FullCalendar key names //@todo, fix in db?
 			return {
 				id: event.id,
+				user: event.user ? event.user.id : null,
 				allDay: event.all_day,	
 				start: event.start ? event.start : trip.start,
 				end: event.end,
 				title: event.title,
-				url: `/events/${event.id}`,
+				category: event.category_id,
+				// url: `/events/${event.id}`,
+				location: event.location,
 				latitude: event.latitude,
 				longitude: event.longitude,
 				editable: true,
 				backgroundColor: color,
-				borderColor: color
+				borderColor: color,
+				company_agency: event.company_agency,
+		        reservation_number: event.reservation_number,
+		        notes: event.notes,
 			}
 		}) : false
 		return <FullCalendar trip={ trip } events={ events } />

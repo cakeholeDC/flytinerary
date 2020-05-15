@@ -13,64 +13,99 @@ import EventModal from './EventModal'
 import moment from 'moment'
 
 class MyCalendar extends React.Component {
-  // calendarComponentRef = React.createRef();
+  calendarComponentRef = React.createRef();
 
-	constructor(props){
-		super(props)
-		
-    this.state = {
-			events: this.props.events,
-      isAgenda: false,
-      eventModal: false,
-      modalData: null
-		}
+  state = {
+    showEventModal: false,
+    clickDate: null,
+    eventPrefill: null
 	}
 
-  toggleEventModal = (arg) => {
+  toggleEventModal = () => {
     this.setState({
-      eventModal: !this.state.eventModal,
-      modalData: arg
+      showEventModal: !this.state.showEventModal,
     })
   }
   
 
-  handleDateClick = arg => {
-    this.toggleEventModal(arg) 
+  handleDateClick = date => {
+    this.setState({
+      clickDate: date
+    })
+    this.toggleEventModal()
+  }
+
+  handleEventClick = e => {
+    console.log(e)
+    const { id, title, allDay, start, end, extendedProps } = e.event
+  
+    if (this.props.currentUser.id === extendedProps.user){
+      const eventObj = {
+        id: Number(id),
+        trip: this.props.trip.id,
+        category: extendedProps.category,
+        user: extendedProps.user,
+        title: title,
+        start: start,
+        end: end,
+        all_day: allDay,
+        location: extendedProps.location,
+        // //grab lat/long by geolocating the location name
+        latitude: extendedProps.latitude,
+        longitude: extendedProps.longitude,
+        company_agency: extendedProps.company_agency,
+        reservation_number: extendedProps.reservation_number,
+        notes: extendedProps.notes,
+      }
+      this.setState({
+        eventPrefill: eventObj
+      })
+
+      this.toggleEventModal()
+    }
+
+    else alert("You are not authorized to edit this event")
+
   }
 
   render() {
-  	const events = this.state.events
+  	const events = this.props.events
     return (
       <div>
       <FullCalendar 
-          eventColor="#ff0000"// BORDER + BACKGROUND
-          // eventBorderColor="#ff0000"// BORDER
-          // eventBackgroundColor="#ff0000"// BACKGROUND
+          // eventColor="#ff0000"// BORDER + BACKGROUND
           ref={ this.calendarComponentRef }
           plugins={[ dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin ]} 
+          //add header buttons
           header={{
-              left: "prev,next today",
-              center: "title",
-              right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek"
-            }}
-            buttonText={{
-              today: 'Today',
-              month:'Month',
-              week:'Week',
-              day:'Day',
-              list:'Agenda'
-            }}
+            left: "prev,next today",
+            center: "title",
+            right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek"
+          }}
+          //override default button text
+          buttonText={{
+            today: 'Today',
+            month:'Month',
+            week:'Week',
+            day:'Day',
+            list:'Agenda'
+          }}
           defaultView="dayGridMonth"//listWeek
           defaultDate={ events[0].start }
           events={ events }
+          // editable
+          eventClick={ this.handleEventClick }
+          // eventDrop={ (e) => console.log("drop", e)}
           dateClick={ this.handleDateClick }
           nowIndicator
         />
-        <EventModal 
-          showModal={this.state.eventModal} 
+        <EventModal
+          showModal={this.state.showEventModal} 
           closeModal={() => this.toggleEventModal()} 
-          calendarData={this.state.modalData} 
-          trip={this.props.trip} />
+          clickDate={this.state.clickDate} 
+          trip={this.props.trip} 
+          eventPrefill={ this.state.eventPrefill }
+         />
       </div>
     )
   }

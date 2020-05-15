@@ -1,5 +1,6 @@
 export const FETCHED_TRIPS = "FETCHED_TRIPS"
 export const FETCHED_CATEGORIES = "FETCHED_CATEGORIES"
+export const ADDED_TRIP_EVENT = "ADDED_TRIP_EVENT"
 export const LOG_IN = "LOG_IN"
 
 const DEV_URL = "http://localhost:3000"
@@ -57,12 +58,15 @@ export function postNewEvent(eventObj){
 
 		fetch(EVENTS_URL, eventPost)
 			.then(res => res.json())
-			.then(json => console.log("POSTED EVENT", json))
-			//CAL STORE NEW EVENT
+			.then(event => {
+				dispatch(storeNewEvent(event))
+			})
 	}
 }
 
-// STORE NEW EVENT HERE
+export function storeNewEvent(newEvent){
+	return { type: ADDED_TRIP_EVENT, payload: newEvent }
+}
 
 export function handleLogIn(user){
 	return (dispatch) => {

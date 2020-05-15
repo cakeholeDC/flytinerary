@@ -45,17 +45,30 @@ export function toTitleCase(str){
 	return final.join(' ')
 }
 
-export function mapboxGeolocate(query, type=null) {
-	 	// type will ultimately be used to change the endpoint as needed, default is string lookup
-		const geoLocateURL = `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?access_token=${ process.env.REACT_APP_MAPBOX_TOKEN }`
-
-		return fetch(geoLocateURL)
-			.then(res => res.json())
-			.then(json => {
-				const coordinates = { 
-					latitude: json.features[0].center[1],
-					longitude: json.features[0].center[0]
-				}
-				return coordinates
-			})
+export function getNumSuffix(num) {
+	  if (num > 3 && num < 21) return 'th';
+	  switch (num % 10) {
+	    case 1:  return "st";
+	    case 2:  return "nd";
+	    case 3:  return "rd";
+	    default: return "th";
+	  }
 	}
+
+export function mapboxGeolocate(query) {
+	const geoLocateURL = `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?access_token=${ process.env.REACT_APP_MAPBOX_TOKEN }`
+
+	return fetch(geoLocateURL)
+		.then(res => res.json())
+		.then(json => {
+			const coordinates = { 
+				latitude: json.features[0].center[1],
+				longitude: json.features[0].center[0]
+			}
+			return coordinates
+		})
+}
+
+export function mapboxLookupCoords(lat, long){
+	console.log('mapboxLookupCoords')
+}
