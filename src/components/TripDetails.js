@@ -127,7 +127,6 @@ class TripDetails extends React.Component {
 	renderCalendar = (trip) => {
 		//@TODO change to trip.events once the endpoint changes. 
 		let events = trip ? trip.event_timeline.map(event => {
-			console.log(event)
 			let category = this.props.categories.find(c => c.id === event.category_id)
 			let color = getCategoryColor(category.name)
 			//map event object to FullCalendar key names //@todo, fix in db?

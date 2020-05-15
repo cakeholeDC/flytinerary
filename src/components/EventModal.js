@@ -22,6 +22,13 @@ const Form = styled.form`
 		margin: 0 0 .5rem 0;
 	}
 
+	select {
+		height: 2.429rem;
+		border: 1px solid lightgray;
+		background-color: #fff;
+		margin: 0 0 .5rem 0;
+	}
+
 	.btn-container {
 		display: flex;
 		justify-content: flex-end;
@@ -32,35 +39,34 @@ const Form = styled.form`
 		}
 	}
 
-	select {
-		height: 2.429rem;
-		border: 1px solid lightgray;
-		background-color: #fff;
-	}
 
 	textarea {
 		border: 1px solid lightgray;
 	}
 
 	.event-time {
-		margin: 1rem auto 0;
 		display: flex;
 
-		.start-end {
-			flex: 3;
-			display: flex;
+		label { margin-right: .5rem; }
 
-			.start-time, .end-time {
+		.start-time, .end-time {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			margin-right: 1rem;
+
+			input, label {
 				flex: 1;
+				justify-content: flex-end;
 			}
 		}
 
 		.all-day {
 			flex: 1;
-			padding-top: .25rem
+			margin: 2rem 0 0 1rem;
 
 			label {
-				margin-right: .5rem;
+				margin-left: .5rem;
 			}
 		}
 	}
@@ -85,10 +91,11 @@ class EventModal extends React.Component {
 	}
 
 	componentDidMount(){
-		this.setState({
-			trip: this.props.trip,
-			user: this.props.currentUser,
-		})
+		// if (props.eventPrefill){
+		// 	this.setState({
+		// 		...props.eventPrefill
+		// 	})
+		// }
 	}
 
 	handleEventFormChange = (event) => {
@@ -106,19 +113,19 @@ class EventModal extends React.Component {
 	handleEventFormSubmit = async (event) => {
 		event.preventDefault()
 		event.target.reset()
+		
 		this.setState({
 			clickDate: this.props.eventPrefill ? this.props.eventPrefill : this.props.clickDate.dateStr
 		})
-
+		debugger
 		const coordinates = await mapboxGeolocate(this.state.location)
 		const start = this.state.allDay ? moment(this.state.clickDate).format() : moment(this.state.clickDate + "T" + this.state.start).format()
 		const end = this.state.allDay ? moment(this.state.clickDate).format() : moment(this.state.clickDate + "T" + this.state.end).format()
 		
-
 		const eventObj = {
-			trip: this.state.trip.id,
+			trip: this.props.trip.id,
 			category: Number(this.state.category),
-			user: this.props.eventPrefill ? this.props.eventPrefill.id : this.state.user.id,
+			user: this.props.eventPrefill ? this.props.eventPrefill.id : this.props.currentUser.id,
 			title: this.state.title,
 			start: start,
 			end: end,
@@ -150,55 +157,108 @@ class EventModal extends React.Component {
 		const eventDaySuffix = getNumSuffix(moment(eventDate).format("D"))
 
 		let prefill = this.props.eventPrefill
-		console.log("prefill", prefill)
 
 		return(
 			<Modal
 				size="tiny"
 			    open={ this.props.showModal }
 			    onClose={ this.props.closeModal }
-			    closeOnDimmerClick
+			    closeOnDimmerClick={false}
 			    closeOnEscape
 			    closeIcon
 		    >
 				<Modal.Header>{ !this.props.clickDate ? "New Event" : `New Event for ${eventDate + eventDaySuffix}` }</Modal.Header>
 			    <Modal.Content>
 			    	<Form onChange={ this.handleEventFormChange } onSubmit={ this.handleEventFormSubmit }>
+						
+
 						<label for="title">Event</label>
-						<input type="text" name="title" placeholder="Bill & Ted's Excellent Adventure" value={ prefill ? prefill.title : null }/>
+						<input
+							required
+							type="text"
+							name="title"
+							placeholder="Bill & Ted's Excellent Adventure"
+							defaultValue={ prefill ? prefill.title : '' }
+						/>
 
 						<label for="category">Type</label>
-						<select name="category">
-							<option disabled value="" defaultValue style={{ color: "gray"}}>Select a Category</option>
+						<select 
+							required
+							name="category"
+							defaultValue={ prefill ? prefill.category : '' }
+						>
+							<option disabled value="" style={{ color: "gray"}}>Select a Category</option>
 							{ this.props.categories.map(c => <option key={c.name} value={ c.id } name={c.name}>{ toTitleCase(c.name) }</option>) }
 						</select>
 
 						<div className="event-time">
-							<div className="all-day">
-								<label for="all_day">All Day</label>
-								<input type="checkbox" name="all_day" value={ prefill ? (!prefill.end ? console.log(prefill.end) : false) : this.state.all_day}/>
+							<div className="start-time">
+								<label for="start" style={{ color: `${this.state.all_day ? 'rgb(84,84,84)' : 'inherit'}` }}>Start Time</label>
+								<input 
+									required
+									type="time" 
+									name="start" 
+									placeholder='12:00' 
+									defaultValue={ prefill ? moment(prefill.start).format("HH:MM") : this.state.start} 
+									disabled={this.state.all_day} 
+								/>
 							</div>
-								<div className="start-end">
-									<div className="start-time">
-										<label for="start" style={{ color: `${this.state.all_day ? 'rgb(84,84,84)' : 'inherit'}` }}>Start</label>
-										<input disabled={this.state.all_day} type="time" name="start" placeholder='12:00' value={ prefill ? moment(prefill.start).format("HH:MM") : this.state.start} />
-									</div>
-									<div className="end-time">
-									    <label for="end" style={{ color: `${this.state.all_day ? 'rgb(84,84,84)' : 'inherit'}` }}>End</label>
-									    <input disabled={this.state.all_day} type="time" name="end" placeholder='14:00' value={ prefill ? moment(prefill.end).format("HH:MM") : this.state.end} />
-								    </div>
-								</div>
+							<div className="end-time">
+							    <label for="end" style={{ color: `${this.state.all_day ? 'rgb(84,84,84)' : 'inherit'}` }}>End Time</label>
+							    <input 
+							    	required
+							    	type="time" 
+							    	name="end" 
+							    	placeholder='14:00' 
+							    	defaultValue={ prefill ? moment(prefill.end).format("HH:MM") : this.state.end}
+							    	disabled={this.state.all_day} 
+							    />
+						    </div>
+							<div className="all-day">
+								<input 
+									type="checkbox" 
+									name="all_day" 
+									value={ this.state.all_day }
+								/>
+								<label for="all_day">All Day</label>
+							</div>
 						</div>
 
-						<label for="location">Where?</label>
-						<input type="text" name="location" placeholder="San Dimas, California" value={ prefill ? prefill.location : null}/>
+						
+						<label for="location">Address or Loction, City, State</label>
+						<input
+							required
+							type="text"
+							name="location"
+							placeholder="San Dimas, California"
+							defaultValue={ prefill ? prefill.location : null}
+						/>
 						
 						<label for="company">Company Reference</label>
-						<input type="text" name="company_agency" placeholder="Pan American Airlines" value={ prefill ? prefill.company_agency : null}/>
+						<input 
+							type="text"
+							name="company_agency"
+							placeholder="Pan American Airlines"
+							defaultValue={ prefill ? prefill.company_agency : null}
+						/>
+						
 						<label for="reservation">Reservation Name/Number</label>
-						<input type="text" name="reservation_number" placeholder="PA 1927" value={ prefill ? prefill.reservation_number : null}/>
+						<input
+							type="text"
+							name="reservation_number"
+							placeholder="PA 1927"
+							defaultValue={ prefill ? prefill.reservation_number : null}
+						/>
+						
 						<label for="notes">Notes:</label>
-						<textarea name="notes" rows="4" cols="10" placeholder="Flight has a layover in Chicago." value={ prefill ? prefill.notes : null}/>
+						<textarea 
+							name="notes" 
+							rows="4" 
+							cols="10" 
+							placeholder="Flight has a layover in Chicago."
+							defaultValue={ prefill ? prefill.notes : null}
+						/>
+						
 						<div className="btn-container">
 							<button type="submit">{ this.props.eventPrefill ? "Submit" : "Add Event" }</button>
 						</div>

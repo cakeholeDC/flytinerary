@@ -38,8 +38,9 @@ class MyCalendar extends React.Component {
   handleEventClick = e => {
     console.log(e)
     const { id, title, allDay, start, end, extendedProps } = e.event
-  
-    if (this.props.currentUser.id === extendedProps.user){
+
+    // TRIP ADMIN => this.props.trip.organizer.id === this.props.currentUser.id
+    if (this.props.currentUser.id === extendedProps.user || this.props.trip.organizer.id === this.props.currentUser.id){
       const eventObj = {
         id: Number(id),
         trip: this.props.trip.id,
@@ -64,6 +65,7 @@ class MyCalendar extends React.Component {
       this.toggleEventModal()
     }
 
+    // event does not belong to user or currentUser is not trip admin
     else alert("You are not authorized to edit this event")
 
   }

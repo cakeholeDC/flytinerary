@@ -30,6 +30,29 @@ export default class Mapbox extends React.Component{
 		})
 	}
 
+	getPinColorByCategory(item){
+		switch(item.category_id){
+			case 1:
+				return '/images/icons/map/flight-marker.png'
+			case 2:
+				return '/images/icons/map/lodging-marker.png'
+			case 3:
+				return '/images/icons/map/reservation-marker.png'
+			case 4:
+				return '/images/icons/map/meal-marker.png'
+			case 5:
+				return '/images/icons/map/other-marker.png'
+			default:
+				return '/images/icons/map/red-marker.png'
+		}
+	}
+
+	// export function resetViewPort(lat, long) {
+	// 	this.setState({
+	// 		latitude: lat,
+	// 	    longitude: long,
+	// 	})
+	// }
 	
 
     render() {
@@ -43,7 +66,7 @@ export default class Mapbox extends React.Component{
     	} 
 
     	// const EVENT_PIN = "https://image.flaticon.com/icons/svg/1397/1397898.svg"
-    	const EVENT_PIN = '/images/icons/map/red-marker.png'
+    	// const EVENT_PIN = `/images/icons/map/red-marker.png`
     	const CITY_PIN = "https://img.icons8.com/office/16/000000/marker.png"
 	    return (
 	    	<MapContainer>
@@ -54,7 +77,6 @@ export default class Mapbox extends React.Component{
 		        mapStyle="mapbox://styles/cakehole/ck9vdfrq40zp11ilisa9eqvvg"
 		        // mapStyle="mapbox://styles/cakehole/ck9vdwijy0h6u1iomel35a3hk"
 		      >
-		      	Markers Here
 		      { /* FIRST MARK CITY, THEN MARK EVENTS */ }
 		      	<Marker latitude={ destination.latitude } longitude={ destination.longitude } key={ destination.name} >
 		      		<img src={ CITY_PIN } alt={destination.name} onClick={()=>console.log("marker clicked")}/>
@@ -64,9 +86,9 @@ export default class Mapbox extends React.Component{
 		      			//convert strings to decimals
 						event.latitude = parseFloat(event.latitude, 10)
 						event.longitude = parseFloat(event.longitude, 10)
-						
+						console.log(event)
 						return <Marker latitude={ event.latitude } longitude={ event.longitude } key={ event.title }>
-							<img src={ EVENT_PIN } alt={ event.name } onClick={()=>console.log("marker clicked")} key={ event.title } onError={event => event.target.src="/images/icons/map/red-marker.png"} />
+							<img src={ this.getPinColorByCategory(event) } alt={ event.name } onClick={(e)=>console.log("marker clicked", e)} key={ event.title } onError={event => event.target.src="/images/icons/map/red-marker.png"} />
 						</Marker>
 		      		})
 		      	}
@@ -77,17 +99,17 @@ export default class Mapbox extends React.Component{
 
 }
 
-export function mapboxGeolocate(query, type=null) {
-	 	// type will ultimately be used to change the endpoint as needed, default is string lookup
+export function mapboxGeolocate(query='') {
 		const geoLocateURL = `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?access_token=${ process.env.REACT_APP_MAPBOX_TOKEN }`
-
+		debugger
 		return fetch(geoLocateURL)
 			.then(res => res.json())
 			.then(json => {
-				const coordinates = { 
-					latitude: json.features[0].center[1],
-					longitude: json.features[0].center[0]
-				}
-				return coordinates
+				debugger
+				// const coordinates = { 
+				// 	latitude: json.features[0].center[1],
+				// 	longitude: json.features[0].center[0]
+				// }
+				// return coordinates
 			})
 	}
