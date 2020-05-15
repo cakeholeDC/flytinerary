@@ -19,7 +19,7 @@ export default class Mapbox extends React.Component{
 	      height: 'calc(100vh - (62px / 2))',
 	      latitude: 38.9240973,
 	      longitude: -77.0274758,
-	      zoom: 13.5,
+	      zoom: 10,
 	    // }
 	}
 
@@ -86,7 +86,6 @@ export default class Mapbox extends React.Component{
 		      			//convert strings to decimals
 						event.latitude = parseFloat(event.latitude, 10)
 						event.longitude = parseFloat(event.longitude, 10)
-						console.log(event)
 						return <Marker latitude={ event.latitude } longitude={ event.longitude } key={ event.title }>
 							<img src={ this.getPinColorByCategory(event) } alt={ event.name } onClick={(e)=>console.log("marker clicked", e)} key={ event.title } onError={event => event.target.src="/images/icons/map/red-marker.png"} />
 						</Marker>

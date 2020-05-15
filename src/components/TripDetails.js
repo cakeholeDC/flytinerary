@@ -5,6 +5,8 @@ import { withRouter } from 'react-router-dom'  //to match url params
 import ErrorPage from './ErrorPage'
 import FullCalendar from './FullCalendar'
 import { displayTripCardDateRange, getEventColor } from '../utils/Helpers'
+import TripModal from './TripModal.js'
+
 
 import { getCategoryColor } from '../utils/Helpers'
 
@@ -31,16 +33,18 @@ const Trip = styled.div`
 
 	.trip-header {
 		flex: 1;
-		max-height: 6.5rem;
+		max-height: fit-content;
 		padding: 1rem 2rem;
 		border-bottom: 1px solid lightgray;
 
-		display: flex;
-		flex-direction: column;
+		// display: flex;
+		// flex-direction: column;
+		display:block;
 
 		.nickname {
-			flex:1;
-			// margin-bottom: 0px;
+			// flex:1;
+			display:block;
+			margin-bottom: .5rem;
 		}
 
 		.subhead {
@@ -49,17 +53,17 @@ const Trip = styled.div`
 			font-style: italic;
 
 			display: flex;
-			flex-direction: row;
+			flex-direction: column;
 
 			.dates {
 				flex:1;
-				margin-bottom: none;
+				margin-bottom: 0px;
 			}
 
 			.destination {
 				flex: 1;
-				text-align: right;
-				margin-bottom: none;
+				// text-align: right;
+				margin-bottom: 0px;
 			}
 		}
 	}
@@ -107,6 +111,16 @@ const Trip = styled.div`
 `
 
 class TripDetails extends React.Component {
+	state={
+		showTripModal: false
+	}
+
+	toggleModal = () => {
+		this.setState({
+			showTripModal: !this.state.showTripModal
+		})
+	}
+
 	getCurrentTrip = () => {
 		if (this.props.trips.length > 0) {
 			const trip = this.props.trips.filter(trip => trip.id === parseInt(this.props.match.params.id), 10)[0]
@@ -169,8 +183,8 @@ class TripDetails extends React.Component {
 					<div className="trip-header">
 						<h1 className="nickname">{ trip.title }</h1>
 						<div className="subhead">
-							<p className="dates">{ dates }</p>
 							<p className="destination">{ trip.destination }</p>
+							<p className="dates">{ dates }</p>
 						</div>
 					</div>
 					<div className="trip-body">
@@ -182,6 +196,10 @@ class TripDetails extends React.Component {
 									{ 'user@email.com' }<br/>
 									{ '555-555-5555' }
 								</p>
+								{ this.props.currentUser.id === trip.organizer.id 
+									? <button onClick={this.toggleModal}>EDIT</button>
+									: null
+								}
 							</div>
 							<div className="attendees">
 								<p>{attendees.length} people attending</p>
@@ -201,6 +219,7 @@ class TripDetails extends React.Component {
 			 	<div className="map">
 				 	<Mapbox trip={trip}/>
 			 	</div>
+			 	<TripModal showModal={ this.state.showTripModal } closeModal={ this.toggleModal } trip={ trip } />
 			</Trip>
 			: <ErrorPage />
 		)
