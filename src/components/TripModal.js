@@ -134,7 +134,7 @@ class TripModal extends React.Component {
 				    			</div>
 				    		</div>
 
-				    		
+				    		{ this.props.trip ? <button type="button" onClick={() => console.log("delete", this.props.trip)}>Delete Trip</button> : null}
 				    		<button floated="right" type='submit'>Schedule Trip</button>
 				    	</Form>
 			    	</Modal.Description>

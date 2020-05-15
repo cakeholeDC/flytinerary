@@ -72,7 +72,7 @@ class MyCalendar extends React.Component {
 
   render() {
   	const events = this.props.events
-    const defaultDate = events.length > 0 ? events[0].start : moment().format()
+    const defaultDate = events.length > 0 ? events[0].start : moment(this.props.trip.start).format()
 
     return (
       <div>

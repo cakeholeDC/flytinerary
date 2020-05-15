@@ -19,7 +19,7 @@ export default class Mapbox extends React.Component{
 	      height: 'calc(100vh - (62px / 2))',
 	      latitude: 38.9240973,
 	      longitude: -77.0274758,
-	      zoom: 10,
+	      zoom: 11,
 	    // }
 	}
 
@@ -65,9 +65,8 @@ export default class Mapbox extends React.Component{
     		name: trip.destination
     	} 
 
-    	// const EVENT_PIN = "https://image.flaticon.com/icons/svg/1397/1397898.svg"
     	// const EVENT_PIN = `/images/icons/map/red-marker.png`
-    	const CITY_PIN = "https://img.icons8.com/office/16/000000/marker.png"
+    	const CITY_PIN = "/images/icons/map/red-marker.png"
 	    return (
 	    	<MapContainer>
 		      <ReactMapGL
