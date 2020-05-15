@@ -117,7 +117,7 @@ class EventModal extends React.Component {
 		this.setState({
 			clickDate: this.props.eventPrefill ? this.props.eventPrefill : this.props.clickDate.dateStr
 		})
-		debugger
+		
 		const coordinates = await mapboxGeolocate(this.state.location)
 		const start = this.state.allDay ? moment(this.state.clickDate).format() : moment(this.state.clickDate + "T" + this.state.start).format()
 		const end = this.state.allDay ? moment(this.state.clickDate).format() : moment(this.state.clickDate + "T" + this.state.end).format()
