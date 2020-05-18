@@ -73,8 +73,9 @@ export default class Mapbox extends React.Component{
 		        {...viewport}
 		      	mapboxApiAccessToken={ process.env.REACT_APP_MAPBOX_TOKEN }
 		        onViewportChange={(viewport) => this.setState({...viewport})}
-		        mapStyle="mapbox://styles/cakehole/ck9vdfrq40zp11ilisa9eqvvg"
-		        // mapStyle="mapbox://styles/cakehole/ck9vdwijy0h6u1iomel35a3hk"
+		        mapStyle="mapbox://styles/cakehole/ck9vdfrq40zp11ilisa9eqvvg" // BASIC => USE THIS ONE
+		        // mapStyle="mapbox://styles/cakehole/ck9vdwijy0h6u1iomel35a3hk" // STANDARD
+		        // mapStyle="mapbox://styles/cakehole/ck9ve4jqo0cwg1io8a5qqj86p" //MINERAL
 		      >
 		      { /* FIRST MARK CITY, THEN MARK EVENTS */ }
 		      	<Marker latitude={ destination.latitude } longitude={ destination.longitude } key={ destination.name} >

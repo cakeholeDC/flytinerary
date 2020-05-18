@@ -22,7 +22,7 @@ const Trip = styled.div`
 	// height: 100%;
 
 	.details {
-		flex: 3;
+		flex: 2;
 		display: flex;
 		flex-direction: column;
 	}
