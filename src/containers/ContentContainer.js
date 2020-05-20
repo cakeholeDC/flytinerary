@@ -1,8 +1,10 @@
 import React from "react"
+
 import HomeContainer from './HomeContainer.js'
 import TripsContainer from './TripsContainer.js'
 import LoginContainer from './LoginContainer.js'
 // import TravelersContainer from './TravelersContainer.js'
+
 import TripDetails from '../components/TripDetails.js'
 import About from '../components/About.js'
 import { Route, Switch, Redirect } from "react-router-dom"
@@ -12,9 +14,8 @@ import { connect } from 'react-redux'
 
 
 const Content = styled.div`
-	// background-color: gray;
-	// height: 100%;
-	height: 'calc(100vh - (62px / 2))';
+	height: 100vh;
+	display: flex;
 
 	@media screen and ${device.tablet} {
 		width: 100%;
@@ -22,6 +23,7 @@ const Content = styled.div`
 `
 
 
+				// <MenuBar />
 class ContentContainer extends React.Component {
 	render(){
 		return(
