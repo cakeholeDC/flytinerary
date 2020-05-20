@@ -11,7 +11,6 @@ const Trips = styled.div`
   	flex-wrap: wrap;
   	flex-direction: row;
   	justify-content: center;
-  	border: 1px solid black;
 
   	h2 {
   		width: 100%;

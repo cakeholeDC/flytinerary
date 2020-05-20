@@ -15,15 +15,9 @@ import { connect } from 'react-redux'
 
 const Content = styled.div`
 	height: 100vh;
-	display: flex;
-
-	@media screen and ${device.tablet} {
-		width: 100%;
-	}
+	width: 100vw;
 `
 
-
-				// <MenuBar />
 class ContentContainer extends React.Component {
 	render(){
 		return(

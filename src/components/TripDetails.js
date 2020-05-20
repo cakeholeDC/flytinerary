@@ -15,6 +15,10 @@ import styled from 'styled-components'
 import Mapbox from './Mapbox'
 
 const Trip = styled.div`
+	@media screen and (max-width: 768px) {
+	    flex-direction: column;
+	}
+
 	display: flex;
 	flex-direction: row;
 	text-align: left;

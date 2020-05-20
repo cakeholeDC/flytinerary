@@ -6,6 +6,12 @@ import { displayTripCardDateRange } from '../utils/Helpers'
 import styled from 'styled-components'
 
 const Card = styled.div`
+	@media screen and (max-width: 768px) {
+	    width: 100vw;
+	    height: 15rem;
+	    margin: .5rem 0;
+	}
+
 	width: 18rem;
     height: 10rem;
 	margin: .5rem .5rem;

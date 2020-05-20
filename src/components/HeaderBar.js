@@ -5,9 +5,9 @@ import BurgerMenu from '../components/BurgerMenu'
 
 import styled from 'styled-components'
 
-const HeaderBar = styled.div`
-	width: 100%;
+const Header = styled.div`
 	height: calc(3rem + 30px);
+	width: 100%;
 	background-color: orange;
 	display: flex;
 	flex-direction: row;
@@ -18,9 +18,13 @@ const HeaderBar = styled.div`
 	}
 
 	.menu,
-	.logo,
 	.user-actions {
 		flex: 1;
+	}
+
+	.logo {
+		flex: 5;
+		justify-content: flex-start;
 	}
 
 	.avatar {
@@ -35,23 +39,23 @@ const HeaderBar = styled.div`
 	}
 `
 
-function HeaderContainer(props) {
+function HeaderBar(props) {
 	return(
-		<HeaderBar >
+		<Header >
 			<div className="menu">
-				<BurgerMenu />
+				{ !props.currentUser	
+					? <BurgerMenu />
+					: null 
+				}
 			</div>
 			<div className="logo">
 				<img src="https://via.placeholder.com/140x40.png?text=Flytinerary Logo" />
 			</div>
 			<div className="user-actions">
-			{ props.currentUser /* @@TODO - make this an interactive menu*/
-				? <a className="avatar" href="/profile"><img className="avatar" src="https://via.placeholder.com/400x400.png?text=Avatar" /></a>
-				: <Link className="avatar" to="/login">Sign In</Link>
-			}
+				<Link className="avatar" to={ props.currentUser ? "/profile" : "/Login" }><img className="avatar" src="https://via.placeholder.com/400x400.png?text=Avatar" /></Link>
 			</div>
-      	</HeaderBar>
+      	</Header>
 	)
 }
 
-export default HeaderContainer
+export default HeaderBar
