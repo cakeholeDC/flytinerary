@@ -44,8 +44,8 @@ var styles = {
     background: '#bdc3c7'
   },
   // Sidebar wrapper styles
-  // Note: Beware of modifying this element as it can break the animations
-  // // you should not need to touch it in most cases
+  // // Note: Beware of modifying this element as it can break the animations
+  // //       you should not need to touch it in most cases
   bmMenuWrap: {
     position: 'fixed',
     height: '100%'
@@ -66,7 +66,11 @@ var styles = {
     display: 'block',
     width: '100%',
     textAlign: 'left',
-    margin: '1rem 0',
+    // margin: '1rem 0',
+    height: '48px',
+    paddingTop: 'calc(48px/2 - .5rem)',
+    color: "#fff",
+    textTransform: "uppercase",
   },
   // Styling of overlay
   bmOverlay: {

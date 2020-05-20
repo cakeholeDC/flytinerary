@@ -21,7 +21,7 @@ const Content = styled.div`
 class ContentContainer extends React.Component {
 	render(){
 		return(
-			<Content>
+			<Content id="content-container">
 				<Switch>
 					<Route exact path="/trips/:id" component={ TripDetails }/>
 			        <Route exact path="/trips" component={ TripsContainer } />

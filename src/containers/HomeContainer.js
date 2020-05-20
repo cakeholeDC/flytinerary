@@ -6,8 +6,13 @@ import { connect } from 'react-redux'
 
 
 const HomePage = styled.div`
-	text-align: left;
+	text-align: center;
 	padding: 3rem;
+
+
+	@media screen and (max-width: 768px) {
+	    padding: 3rem 0;
+	}
 
 `
 
