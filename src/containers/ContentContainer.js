@@ -14,7 +14,7 @@ import { connect } from 'react-redux'
 
 
 const Content = styled.div`
-	height: 100vh;
+	height: 100%;
 	width: 100vw;
 `
 
@@ -25,6 +25,7 @@ class ContentContainer extends React.Component {
 				<Switch>
 					<Route exact path="/trips/:id" component={ TripDetails }/>
 			        <Route exact path="/trips" component={ TripsContainer } />
+			        <Route exact path="/archive" render={() => <TripsContainer archive /> } />
 			        <Route exact path="/about" component={ About } />
 		            <Route exact path="/profile" component={ HomeContainer } />
 			        <Route exact path="/" component={ HomeContainer } />

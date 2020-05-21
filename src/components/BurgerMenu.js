@@ -9,7 +9,8 @@ class BurgerMenu extends React.Component {
     return (
       <Menu isOpen={ false } styles={ styles }>
         <NavLink className="menu-item" to='/' exact>Home</NavLink>
-		<NavLink className="menu-item" to='/trips' exact>Trips</NavLink>
+    <NavLink className="menu-item" to='/trips' exact>Upcoming Trips</NavLink>
+		<NavLink className="menu-item" to='/archive' exact>Past Trips</NavLink>
 		<NavLink className="menu-item" to='/travelers' exact>Travelers</NavLink>
 		<NavLink className="menu-item" to='/about' exact>About</NavLink>
       </Menu>

@@ -17,15 +17,28 @@ const Header = styled.div`
 	}
 
 	.logo {
-		flex: 5;
+		flex: 1;
 		padding: 1rem;
 		
 		h1 {
 			font-family: 'Pacifico', cursive;
 		}
+
+		a {
+			color: black;
+			&:hover,
+			&:visited,
+			&:active {
+				color: black
+			}
+		}
 	}
 
 	.user-actions {
+		@media screen and (max-width: 768px) {
+			flex: none;
+		}
+
 		text-align: right;
 		flex: 1;
 		min-width: 48px;
@@ -50,7 +63,7 @@ function HeaderBar(props) {
 				}
 			</div>
 			<div className="logo">
-				<h1>Flytinerary</h1>
+				<Link to="/"><h1>Flytinerary</h1></Link>
 				{/*<img src="https://via.placeholder.com/140x40.png?text=Flytinerary Logo" />*/ }
 			</div>
 			<div className="user-actions">

@@ -17,6 +17,19 @@ import Mapbox from './Mapbox'
 const Trip = styled.div`
 	@media screen and (max-width: 768px) {
 	    flex-direction: column;
+
+	    .fc-toolbar {
+	    	flex-direction: column-reverse;
+	    }
+
+	    .key {
+	    	width: 100%;
+	    	flex-direction: column;
+
+	    	// .color {
+	    	// 	width: 100%;
+	    	// }
+	    }
 	}
 
 	display: flex;
@@ -38,17 +51,27 @@ const Trip = styled.div`
 	.trip-header {
 		flex: 1;
 		max-height: fit-content;
-		padding: 1rem 2rem;
+		padding: 1rem;
 		border-bottom: 1px solid lightgray;
 
 		// display: flex;
 		// flex-direction: column;
 		display:block;
 
+		.title {
+			display: flex;
+		}
+
 		.nickname {
-			// flex:1;
+			flex:1;
 			display:block;
 			margin-bottom: .5rem;
+		}
+
+		button {
+			height: fit-content;
+		    width: fit-content;
+		    justify-content: flex-end;
 		}
 
 		.subhead {
@@ -91,12 +114,13 @@ const Trip = styled.div`
 		padding-left: 1rem;
 	}
 
-	.events, .organizer, .attendees {
+	.events {
 		border: 1px solid black;
 	}
 		
 	.events{
-		padding: 2rem 2rem 0rem 2rem;
+		padding: 1rem;
+		margin-top: 1rem;
 	}	
 
 	.key {
@@ -109,7 +133,7 @@ const Trip = styled.div`
 			text-align: center;
 			padding: 0.25rem 0;
 			flex: 1;
-			width: 3rem;
+			// width: 3rem;
 		}
 	}
 `
@@ -174,10 +198,11 @@ class TripDetails extends React.Component {
 
 	render(){
 		const trip = this.getCurrentTrip()
+		const dates = trip ? displayTripCardDateRange(trip.start, trip.end) : null
 
 		const organizerName = trip ? (trip.organizer.first_name + ' ' + trip.organizer.last_name) : null
 		const attendees = trip ? trip.attendees.sort((a, b) => a.last_name > b.last_name ? 1 : -1) : null
-		const dates = trip ? displayTripCardDateRange(trip.start, trip.end) : null
+		
 		const timeline = trip ? this.renderCalendar(trip) : null
 
 		return (
@@ -185,7 +210,13 @@ class TripDetails extends React.Component {
 			? <Trip>
 				<div className="details">
 					<div className="trip-header">
-						<h1 className="nickname">{ trip.title }</h1>
+						<div className="title">
+							<h1 className="nickname">{ trip.title }</h1>
+							{ this.props.currentUser.id === trip.organizer.id 
+								? <button onClick={this.toggleModal}>Manage Trip</button>
+								: null
+							}
+						</div>
 						<div className="subhead">
 							<p className="destination">{ trip.destination }</p>
 							<p className="dates">{ dates }</p>
@@ -194,16 +225,12 @@ class TripDetails extends React.Component {
 					<div className="trip-body">
 						<div className="contact">
 							<div className="organizer">
-								<p>Questions?</p>
+								<p>Trip Host:</p>
 								<p>
-									{ organizerName }<br/>
+									<strong>{ organizerName }</strong><br/>
 									{ 'user@email.com' }<br/>
 									{ '555-555-5555' }
 								</p>
-								{ this.props.currentUser.id === trip.organizer.id 
-									? <button onClick={this.toggleModal}>Manage Trip</button>
-									: null
-								}
 							</div>
 							<div className="attendees">
 								<p>{attendees.length} people attending</p>
@@ -213,10 +240,10 @@ class TripDetails extends React.Component {
 						 	</div>
 						 </div>
 						<div className="events">
-							{ timeline }
 							<div className="key">
 								{ this.props.categories.map(c => <div key={c.name} className="color" style={{ backgroundColor: `${getCategoryColor(c.name)}`}}>{c.name}</div>) } 
 							</div>
+							{ timeline }
 						</div>
 				 	</div>
 			 	</div>

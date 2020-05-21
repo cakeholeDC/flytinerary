@@ -9,6 +9,8 @@ const HomePage = styled.div`
 	text-align: center;
 	padding: 3rem;
 
+	h1{ font-size: 3rem;}
+
 
 	@media screen and (max-width: 768px) {
 	    padding: 3rem 0;

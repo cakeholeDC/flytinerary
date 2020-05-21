@@ -15,7 +15,8 @@ const MapContainer = styled.div`
 export default class Mapbox extends React.Component{
 	state = {
 	    // viewport: {
-	      width: 'inherit', // controlled by Flexbox
+	      // width: 'inherit', // controlled by Flexbox
+	      width: 'calc(100%)', // controlled by Flexbox
 	      height: 'calc(100vh - (62px / 2))',
 	      latitude: 38.9240973,
 	      longitude: -77.0274758,

@@ -4,6 +4,21 @@ import styled from 'styled-components'
 
 const TripCreator = styled.div`
 	text-align: center;
+	margin: 2rem;
+		padding: 1rem;
+		width: 100%;
+		border-top: 1px solid lightgray;
+		border-bottom: 1px solid lightgray;
+
+	input {
+		padding: .5rem;
+		border: 1px solid lightgray;
+		margin: 0 .5rem 0 0;
+	}
+
+	button  {
+		padding: .5rem;
+	}
 `
 
 class NewTrip extends React.Component {

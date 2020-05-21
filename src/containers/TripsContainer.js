@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from 'react-redux'
 import TripCard from "../components/TripCard.js"
 import styled from 'styled-components'
-
+import moment from 'moment'
 
 const Trips = styled.div`
 	min-height: 100%;
@@ -19,10 +19,17 @@ const Trips = styled.div`
 
 class TripsContainer extends React.Component {
 	render(){
-		const trips = this.props.trips
+		let trips = this.props.trips
+
+		if (this.props.archive){
+			trips = trips.filter(trip=> new Date(trip.start) < new Date())
+		} else {
+			trips = trips.filter(trip=> new Date(trip.start) >= new Date())
+		}
+
 		return(
 			<Trips className="trips-container">
-				<h2>Your Upcoming Trips</h2>
+				<h2>Your { this.props.archive ? "Past" : "Upcoming" } Trips</h2>
 					{ trips.map((trip, index) => <TripCard key={index} trip={trip} />) }
 			</Trips>
 		)

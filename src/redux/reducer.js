@@ -13,19 +13,24 @@ function userReducer(oldState = null, action) {
 function tripReducer(oldState = [], action){
 	switch (action.type){
 		case FETCHED_TRIPS:
-			return action.payload
+			let fetchedTrips = action.payload.sort((a, b) => a.start > b.start ? 1 : -1)
+			return fetchedTrips
 		case NEW_TRIP:
 			const newTrip = action.payload
-			return [...oldState, newTrip]
+			let newTrips = [...oldState, newTrip].sort((a, b) => a.start > b.start ? 1 : -1)
+			return newTrips
 		case UPDATE_TRIP:
 			const updated_trip = action.payload
-			return [...oldState.filter(trip => trip.id !== action.payload.id), updated_trip]		
+			let revisedTrips = [...oldState.filter(trip => trip.id !== action.payload.id), updated_trip].sort((a, b) => a.start > b.start ? 1 : -1)
+			return revisedTrips
 		case ADDED_TRIP_EVENT:
 			const findTrip = oldState.find(trip => trip.id === action.payload.trip_id)
 			findTrip.event_timeline.push(action.payload)
-			return [...oldState.filter(trip => trip.id !== action.payload.trip_id), findTrip]
+			let modifiedTrips = [...oldState.filter(trip => trip.id !== action.payload.trip_id), findTrip].sort((a, b) => a.start > b.start ? 1 : -1)
+			return modifiedTrips
 		default:
-			return oldState
+			let defaultTrips = oldState.sort((a, b) => a.start > b.start ? 1 : -1)
+			return defaultTrips
 	}
 }
 
