@@ -167,7 +167,13 @@ class EventModal extends React.Component {
 			    closeOnEscape
 			    closeIcon
 		    >
-				<Modal.Header>{ !this.props.clickDate ? "New Event" : `New Event for ${eventDate + eventDaySuffix}` }</Modal.Header>
+				<Modal.Header>{ prefill 
+								? `Editing ${prefill.title} on ${eventDate + eventDaySuffix}` 
+								: this.props.clickDate 
+									? `New Event for ${eventDate + eventDaySuffix}` 
+									:  "New Event"
+								}
+				</Modal.Header>
 			    <Modal.Content>
 			    	<Form onChange={ this.handleEventFormChange } onSubmit={ this.handleEventFormSubmit }>
 						

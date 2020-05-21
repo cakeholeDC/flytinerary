@@ -1,8 +1,8 @@
 import * as moment from 'moment'
 
 export function displayTripCardDateRange(tripStart, tripEnd) {
-		const start = moment(tripStart)
-		const end = moment(tripEnd)
+		const start = moment.utc(tripStart)
+		const end = moment.utc(tripEnd)
 
 		// does the event occurr within a single year?
 		if (start.format('YYYY') === end.format('YYYY')) {

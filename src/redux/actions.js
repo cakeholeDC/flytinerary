@@ -1,6 +1,7 @@
 export const FETCHED_TRIPS = "FETCHED_TRIPS"
 export const FETCHED_CATEGORIES = "FETCHED_CATEGORIES"
 export const NEW_TRIP = "NEW_TRIP"
+export const UPDATE_TRIP = "UPDATE_TRIP"
 export const ADDED_TRIP_EVENT = "ADDED_TRIP_EVENT"
 export const LOG_IN = "LOG_IN"
 
@@ -67,6 +68,28 @@ export function postNewTrip(tripObj){
 
 export function storeNewTrip(newTrip){
 	return { type: NEW_TRIP, payload: newTrip }
+}
+
+export function patchTrip(tripObj){
+	return (dispatch) => {
+		const tripPatch = {
+			method: "PATCH",
+			headers: {
+				'Content-Type': "application/json",
+				"Accept" : "application/json"
+			},
+			body: JSON.stringify(tripObj)
+		}
+		fetch(`${TRIPS_URL}/${tripObj.id}`, tripPatch)
+			.then(res => res.json())
+			.then(trip => {
+				dispatch(storePatchedTrip(trip))
+			})
+	}
+}
+
+export function storePatchedTrip(patchedTrip){
+	return { type: UPDATE_TRIP, payload: patchedTrip }
 }
 
 export function postNewEvent(eventObj){

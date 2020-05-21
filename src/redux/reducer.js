@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux'
-import { FETCHED_TRIPS, FETCHED_CATEGORIES, LOG_IN, ADDED_TRIP_EVENT, NEW_TRIP } from './actions.js'
+import { FETCHED_TRIPS, FETCHED_CATEGORIES, LOG_IN, ADDED_TRIP_EVENT, NEW_TRIP, UPDATE_TRIP } from './actions.js'
 
 function userReducer(oldState = null, action) {
 	switch (action.type){
@@ -16,7 +16,10 @@ function tripReducer(oldState = [], action){
 			return action.payload
 		case NEW_TRIP:
 			const newTrip = action.payload
-			return [...oldState, newTrip]		
+			return [...oldState, newTrip]
+		case UPDATE_TRIP:
+			const updated_trip = action.payload
+			return [...oldState.filter(trip => trip.id !== action.payload.id), updated_trip]		
 		case ADDED_TRIP_EVENT:
 			const findTrip = oldState.find(trip => trip.id === action.payload.trip_id)
 			findTrip.event_timeline.push(action.payload)

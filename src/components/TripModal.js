@@ -9,7 +9,7 @@ import { mapboxGeolocate } from './Mapbox.js'
 import TRAVEL_QUOTES from '../data/travelQuotes.js'
 
 //actions
-import { postNewTrip } from '../redux/actions'
+import { postNewTrip, patchTrip } from '../redux/actions'
 
 const Form = styled.form`
 	display: flex;
@@ -33,10 +33,11 @@ class TripModal extends React.Component {
 		super(props)
 		this.state = {
 			quote: TRAVEL_QUOTES[Math.floor(Math.random() * TRAVEL_QUOTES.length)],
+			id: props.trip ? props.trip.id : null,
 			title: props.trip ? props.trip.title : null,
 			destination: props.trip ? props.trip.destination : null,
-			start: props.trip ? moment(props.trip.start).format("YYYY-MM-DD") : moment().format("YYYY-MM-DD"),
-			end: props.trip ? moment(props.trip.end).format("YYYY-MM-DD") : moment().add(1, 'week').format("YYYY-MM-DD"),
+			start: props.trip ? moment.utc(props.trip.start).format("YYYY-MM-DD") : moment.utc().format("YYYY-MM-DD"),
+			end: props.trip ? moment.utc(props.trip.end).format("YYYY-MM-DD") : moment.utc().add(1, 'week').format("YYYY-MM-DD"),
 			user_id: props.currentUser.id, //ALWAYS current_user
 			image: props.trip ? props.trip.image : null
 		}
@@ -75,15 +76,18 @@ class TripModal extends React.Component {
 		const tripObj = {
 			title: this.state.title,
 			destination: this.state.destination,
-			start: this.state.start,
-			end: this.state.end,
+			start: new Date(this.state.start).toUTCString(),
+			end: new Date(this.state.end).toUTCString(),
 			user_id: this.state.user_id,
 			image: this.state.image,
 			latitude: coordinates.latitude,
 			longitude: coordinates.longitude,
 		}
 		if (this.props.trip) {
+			//add id to tripObj
+			tripObj.id = this.state.id
 			//PATCH TRIP
+			this.props.patchTrip(tripObj)
 		} else {
 			//POST NEW TRIP
 			this.props.postNewTrip(tripObj)
@@ -152,7 +156,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  postNewTrip: (tripObj) => { dispatch(postNewTrip(tripObj)) }
+  postNewTrip: (tripObj) => { dispatch(postNewTrip(tripObj)) },
+  patchTrip: (tripObj) => { dispatch(patchTrip(tripObj)) }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TripModal)
