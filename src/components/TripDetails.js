@@ -201,7 +201,7 @@ class TripDetails extends React.Component {
 									{ '555-555-5555' }
 								</p>
 								{ this.props.currentUser.id === trip.organizer.id 
-									? <button onClick={this.toggleModal}>EDIT</button>
+									? <button onClick={this.toggleModal}>Manage Trip</button>
 									: null
 								}
 							</div>
