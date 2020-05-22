@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 const TripCreator = styled.div`
 	text-align: center;
-	margin: 2rem;
+	// margin: 2rem;
 		padding: 1rem;
 		width: 100%;
 		border-top: 1px solid lightgray;
