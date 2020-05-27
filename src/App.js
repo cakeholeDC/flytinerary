@@ -4,7 +4,6 @@ import './App.scss';
 import { connect } from 'react-redux'
 import { Switch, Route } from "react-router-dom";
 //content
-import HeaderBar from "./components/HeaderBar.js"
 import ContentContainer from "./containers/ContentContainer.js"
 import LoginContainer from './containers/LoginContainer.js'
 //actions
@@ -26,7 +25,6 @@ class App extends React.Component {
   render(){
     return (
       <div className="App">
-        <HeaderBar />
         { this.props.currentUser 
           ? <ContentContainer />
           : <LoginContainer />

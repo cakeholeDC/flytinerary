@@ -4,27 +4,57 @@ import styled from 'styled-components'
 import { handleLogIn } from '../redux/actions'
 
 
-const Form = styled.form`
-	background-color: orange;
-	
-	width: 60%;
-	margin: 3rem auto 0rem;
+const Form = styled.form`	
+	width: 30%;
+	margin: 3rem auto;
 	display: flex;
 	flex-direction: column;
+	background: rgba(202, 202, 202, .8);
+	padding: 2rem;
+	border-radius: 25px;
 
-	fieldset {
-		flex: 3;
-		text-align: left;
-		display: flex;
-		flex-direction: column;
+	@media screen and (max-width: 768px) {
+		width: 100%;
 	}
 
+	p { 
+		flex: 1;
+		text-align: left;
+		margin-top: 1rem;
+	}
 
-	p { flex: 1; }
-
-	label, input, button {
+	label, input {
 		display: block;
 		flex: 1;
+	}
+
+	input {
+		padding: .5rem;
+		border: 1px solid lightgray;
+		margin: 0 0 .5rem 0;
+	}
+
+	label {
+		font-weight: bold;
+		text-transform: uppercase;
+		text-align: left;
+		margin-bottom: .125rem;
+		
+		// &:nth-of-type(1) {
+		// 	margin: 0;
+		// }
+	}
+
+	.button-container {
+		flex: 1;
+		margin: .5rem 0;
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-end;
+
+		button {
+			width: fit-content;
+		}
 	}
 `
 
@@ -81,6 +111,7 @@ class UserForm extends React.Component {
 		}
 
 		this.props.handleLogIn(userObj)
+
 	}
 
 	render(){
@@ -90,7 +121,6 @@ class UserForm extends React.Component {
 				onSubmit={ event => this.submitUserForm(event) } 
 				onChange={ event => this.onFormChange(event) }
 			>
-				<fieldset>
 				<input
 						type="hidden"
 						name="id"
@@ -140,8 +170,9 @@ class UserForm extends React.Component {
 					</React.Fragment>
 					: null
 				}
-				<button type="submit" name="submit">{ this.state.isSignUp ? "Sign Up" : "Log In"}</button>
-				</fieldset>
+				<div className="button-container">
+					<button type="submit" name="submit">{ this.state.isSignUp ? "Sign Up" : "Log In"}</button>
+				</div>
 				{ this.state.isSignUp
 					? <p>Already have an account? <a onClick={ this.toggleSignUp }>Log-in here.</a></p>
 					: <p>Need an account? <a onClick={ this.toggleSignUp }>Click here to sign up.</a></p>
