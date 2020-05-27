@@ -15,13 +15,26 @@ import LoginContainer from './LoginContainer.js'
 
 const Content = styled.div`
 	height: 100%;
-	width: 100vw;
+	width: 100%;
+
+	background: url(/images/retro-map.jpg) no-repeat center center fixed; 
+	background-size: cover;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+
+	.overlay {
+		height: 100%;
+		width: 100%;
+		background-color: rgba(255, 255, 255, .5);
+	}
 `
 
 class ContentContainer extends React.Component {
 	render(){
 		return(
 			<Content id="content-container">
+			<div className="overlay">
 		        <HeaderBar />
 				<Switch>
 					<Route exact path="/trips/:id" component={ TripDetails }/>
@@ -32,6 +45,7 @@ class ContentContainer extends React.Component {
 		            <Route exact path="/profile" component={ LoginContainer } />
 			        <Route exact path="/" component={ HomeContainer } />
 				</Switch>
+			</div>
 			</Content>
 		)
 	}

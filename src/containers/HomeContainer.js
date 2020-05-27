@@ -37,16 +37,25 @@ const HomePage = styled.div`
 
 	.header {
 		display: flex;
+		
 	}
 
 	.left {
+		background-color: rgba(255, 255, 255, .8);
+		border-radius: 25px;
+		padding: 1rem 1.5rem;
 		text-align: left;
 		flex: 1;
 		display: flex;
 		flex-direction: column;
 
+		h1 {
+			margin-top: 0;
+		}
+
 		.next-trip {
 			font-style: italic;
+			font-size: 1.125rem;
 		}
 	}
 

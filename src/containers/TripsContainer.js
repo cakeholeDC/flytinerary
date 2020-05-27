@@ -7,6 +7,8 @@ import moment from 'moment'
 const Trips = styled.div`
 	min-height: 100%;
 	margin: auto;
+	margin-top: 3rem;
+	background-color: white;
   	display: flex;
   	flex-wrap: wrap;
   	flex-direction: row;
